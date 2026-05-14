@@ -6,6 +6,64 @@
     <title>CSA Calgary Content Manager</title>
   </head>
   <body>
+    <script>
+      (function () {
+        var channelName = "decap-cms-oauth";
+        var storageKey = "decap_cms_oauth_message";
+        var lastMessage = "";
+
+        function emitDecapMessage(message) {
+          window.dispatchEvent(new MessageEvent("message", {
+            data: message,
+            origin: window.location.origin,
+            source: window
+          }));
+        }
+
+        function providerFromMessage(message) {
+          var match = /^authorization:([^:]+):/.exec(message);
+          return match && match[1];
+        }
+
+        function receiveBridgePayload(payload) {
+          var message = payload && payload.message ? payload.message : payload;
+
+          if (typeof message !== "string" || message === lastMessage) {
+            return;
+          }
+
+          lastMessage = message;
+
+          var provider = providerFromMessage(message);
+
+          if (provider) {
+            emitDecapMessage("authorizing:" + provider);
+            setTimeout(function () {
+              emitDecapMessage(message);
+            }, 0);
+          }
+        }
+
+        if ("BroadcastChannel" in window) {
+          var channel = new BroadcastChannel(channelName);
+          channel.onmessage = function (event) {
+            receiveBridgePayload(event.data);
+          };
+        }
+
+        window.addEventListener("storage", function (event) {
+          if (event.key !== storageKey || !event.newValue) {
+            return;
+          }
+
+          try {
+            receiveBridgePayload(JSON.parse(event.newValue));
+          } catch (error) {
+            receiveBridgePayload(event.newValue);
+          }
+        });
+      })();
+    </script>
     <script
       src="https://unpkg.com/decap-cms@3.8.3/dist/decap-cms.js"
       integrity="sha256-ylYODlzbXmYTYP/ZcU7XIoAUUecSebgxpq5ZpKoUFb4="

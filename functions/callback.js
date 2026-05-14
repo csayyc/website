@@ -1,4 +1,6 @@
 const GITHUB_TOKEN_URL = "https://github.com/login/oauth/access_token";
+const OAUTH_BRIDGE_CHANNEL = "decap-cms-oauth";
+const OAUTH_BRIDGE_STORAGE_KEY = "decap_cms_oauth_message";
 
 function readCookie(request, name) {
   const cookieHeader = request.headers.get("Cookie") || "";
@@ -21,7 +23,30 @@ function renderAuthResponse(status, content) {
     <script>
       (function () {
         var message = 'authorization:github:${status}:${payload}';
+        var bridgePayload = {
+          type: "decap-cms-oauth",
+          provider: "github",
+          message: message,
+          createdAt: Date.now()
+        };
         var sent = false;
+
+        function sendToBridge() {
+          try {
+            if ("BroadcastChannel" in window) {
+              var channel = new BroadcastChannel("${OAUTH_BRIDGE_CHANNEL}");
+              channel.postMessage(bridgePayload);
+              channel.close();
+            }
+          } catch (error) {}
+
+          try {
+            localStorage.setItem("${OAUTH_BRIDGE_STORAGE_KEY}", JSON.stringify(bridgePayload));
+            setTimeout(function () {
+              localStorage.removeItem("${OAUTH_BRIDGE_STORAGE_KEY}");
+            }, 1000);
+          } catch (error) {}
+        }
 
         function sendToOpener(targetOrigin) {
           if (sent) return;
@@ -34,16 +59,17 @@ function renderAuthResponse(status, content) {
           sendToOpener(e.origin);
         }
 
+        sendToBridge();
+
         if (window.opener) {
           window.addEventListener("message", receiveMessage, false);
           window.opener.postMessage("authorizing:github", "*");
-          // Fallback: Decap CMS ignores postMessages from the same origin, so if
-          // the handshake gets no response within 1s, send directly to any origin.
+          // If Decap's handshake response does not arrive, send directly. Decap
+          // still validates the message origin against the configured base_url.
           setTimeout(function () { sendToOpener("*"); }, 1000);
         } else {
           document.body.innerHTML =
-            "<p>Authentication error: this page must be opened as a popup. " +
-            "Please close this tab and try again from the CMS.</p>";
+            "<p>Authentication finished. Return to the CMS tab to continue.</p>";
         }
       })();
     </script>
