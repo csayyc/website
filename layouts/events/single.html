@@ -67,7 +67,7 @@
 
     </div>
 
-    {{/* Right panel — gradient always; photo on top when image is set */}}
+    {{/* Right panel: gradient always; photo on top when image is set */}}
     <div class="event-hero-right{{ with .Params.image }} event-hero-right--photo{{ end }}">
       {{ with .Params.image }}
         <img src="{{ . }}" alt="" decoding="async" class="absolute inset-0 h-full w-full object-cover">
@@ -93,7 +93,7 @@
         <div class="prose prose-slate max-w-none prose-a:text-orange">{{ .Content }}</div>
       </div>
 
-      {{/* Agenda — only when front matter provides it */}}
+      {{/* Agenda: only when front matter provides it */}}
       {{ with .Params.agenda }}
         <div class="event-agenda">
           <p class="section-label">Agenda</p>
@@ -138,7 +138,7 @@
             <div class="event-capacity-bar-wrap">
               <div class="event-capacity-bar"></div>
             </div>
-            <p class="sidebar-sub mt-1">Fills quickly — RSVP early.</p>
+            <p class="sidebar-sub mt-1">Fills quickly. RSVP early.</p>
           </div>
         {{ end }}
 

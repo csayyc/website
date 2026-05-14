@@ -270,7 +270,7 @@
   .event-capacity-bar-wrap {
     @apply mt-2 h-1 overflow-hidden rounded-full bg-surface;
   }
-  /* decorative fill — static visual indicator, not computed from live data */
+  /* decorative fill: static visual indicator, not computed from live data */
   .event-capacity-bar {
     @apply h-full w-[58%] rounded-full bg-orange;
   }
