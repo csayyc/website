@@ -1,6 +1,6 @@
 <article class="group overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-premium transition hover:-translate-y-1 hover:border-orange/40 hover:shadow-[0_28px_70px_-32px_rgba(242,125,66,0.55)]">
   <div class="relative aspect-[4/3] overflow-hidden bg-surface">
-    <img src="{{ .photo | default "/images/board/placeholder.svg" }}" alt="{{ with .name }}{{ . }}{{ else }}{{ .title }}{{ end }}" class="h-full w-full object-cover transition duration-500 group-hover:scale-105">
+    <img src="{{ .photo | default "/images/board/placeholder.svg" }}" alt="{{ with .name }}{{ . }}{{ else }}{{ .title }}{{ end }}" width="600" height="450" loading="lazy" decoding="async" class="h-full w-full object-cover transition duration-500 group-hover:scale-105">
     {{ with .linkedin_url }}
       <a href="{{ . }}" class="absolute right-4 top-4 inline-flex h-11 w-11 items-center justify-center rounded-full bg-white text-[#0A66C2] shadow-[0_14px_40px_rgba(0,0,0,0.22)] ring-1 ring-slate-200 transition hover:-translate-y-0.5 hover:bg-[#0A66C2] hover:text-white focus:outline-none focus:ring-4 focus:ring-white/50" target="_blank" rel="noopener noreferrer" aria-label="Open LinkedIn profile">
         {{ partial "icon.html" (dict "name" "linkedin" "class" "h-5 w-5") }}

@@ -1,13 +1,13 @@
 <header class="sticky top-0 z-50 border-b border-white/10 bg-navy/95 text-white backdrop-blur">
   <div class="container-premium flex h-16 items-center justify-between sm:h-20">
     <a href="{{ "/" | relURL }}" class="flex items-center rounded-xl bg-white px-2.5 py-1.5 shadow-sm ring-1 ring-white/40 transition hover:bg-offwhite focus:outline-none focus:ring-2 focus:ring-white/70 sm:rounded-2xl sm:px-3 sm:py-2" aria-label="CSA Calgary home">
-      <img src="{{ "images/logo.svg" | relURL }}" alt="CSA Calgary logo" class="h-8 w-auto sm:h-11">
+      <img src="{{ "images/logo.svg" | relURL }}" alt="" class="h-8 w-auto sm:h-11">
     </a>
     <details class="group relative md:hidden">
       <summary class="flex cursor-pointer list-none items-center gap-2 rounded-full border border-white/25 px-4 py-2 text-sm font-semibold">
         Menu
         <span class="flex h-5 w-5 items-center justify-center rounded-full bg-orange text-white transition group-open:rotate-180">
-          <svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="m6 9 6 6 6-6"/></svg>
+          <svg class="h-3.5 w-3.5" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="m6 9 6 6 6-6"/></svg>
         </span>
       </summary>
       <nav class="absolute right-0 mt-3 w-64 rounded-2xl bg-white p-3 text-charcoal shadow-premium">
@@ -16,7 +16,7 @@
           {{ range .Children }}
             <a class="ml-4 flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-semibold text-csa-slate hover:bg-surface hover:text-navy" href="{{ .URL }}">
               <span class="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-orange/10 text-orange">
-                <svg class="h-3 w-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="m9 6 6 6-6 6"/></svg>
+                <svg class="h-3 w-3" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="m9 6 6 6-6 6"/></svg>
               </span>
               {{ .Name }}
             </a>
@@ -31,7 +31,7 @@
             <a class="inline-flex items-center gap-2 rounded-full px-4 py-2 text-base font-semibold text-white/85 transition hover:bg-white/10 hover:text-white focus:bg-white/10 focus:text-white focus:outline-none focus:ring-2 focus:ring-white/30" href="{{ .URL }}">
               {{ .Name }}
               <span class="flex h-5 w-5 items-center justify-center rounded-full bg-orange text-white shadow-sm transition group-hover:rotate-180 group-focus-within:rotate-180">
-                <svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="m6 9 6 6 6-6"/></svg>
+                <svg class="h-3.5 w-3.5" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="m6 9 6 6 6-6"/></svg>
               </span>
             </a>
             <div class="invisible absolute left-0 top-full z-50 w-56 rounded-2xl bg-white p-2 opacity-0 shadow-premium transition group-hover:visible group-hover:opacity-100 group-focus-within:visible group-focus-within:opacity-100">

@@ -70,7 +70,7 @@
     {{/* Right panel — gradient always; photo on top when image is set */}}
     <div class="event-hero-right{{ with .Params.image }} event-hero-right--photo{{ end }}">
       {{ with .Params.image }}
-        <img src="{{ . }}" alt="{{ $.Title }}" class="absolute inset-0 h-full w-full object-cover">
+        <img src="{{ . }}" alt="" decoding="async" class="absolute inset-0 h-full w-full object-cover">
       {{ end }}
       <div class="event-hero-right-texture"></div>
       <div class="event-hero-right-glow"></div>

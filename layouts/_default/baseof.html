@@ -2,6 +2,7 @@
 <html lang="{{ site.Language.Locale | default "en-ca" }}">
   {{ partial "head.html" . }}
   <body class="min-h-screen">
+    <a href="#main" class="skip-link">Skip to main content</a>
     {{ partial "header.html" . }}
     <main id="main">
       {{ block "main" . }}{{ end }}
