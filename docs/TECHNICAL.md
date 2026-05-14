@@ -60,6 +60,7 @@ Expected secrets/environment variables:
 
 - `GITHUB_CLIENT_ID`
 - `GITHUB_CLIENT_SECRET`
+- `CMS_ALLOWED_GITHUB_USERS` comma-separated GitHub usernames allowed to use Decap CMS
 - `HUGO_PARAMS_web3formsKey`
 - `HUGO_PARAMS_cloudflareAnalyticsToken`
 
@@ -73,3 +74,9 @@ CMS files:
 - `functions/callback.js`
 
 Decap CMS is pinned in `static/admin/index.html`. Event fields in `static/admin/config.yml` should stay aligned with the event template fields used by `layouts/events/single.html`.
+
+CMS protection layers:
+
+- Decap uses GitHub sign-in against `csayyc/website`.
+- `publish_mode: editorial_workflow` keeps CMS changes in Decap's review workflow before publishing.
+- `functions/callback.js` requires `CMS_ALLOWED_GITHUB_USERS`; login fails closed if the variable is missing or the GitHub login is not listed.

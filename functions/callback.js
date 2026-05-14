@@ -1,4 +1,5 @@
 const GITHUB_TOKEN_URL = "https://github.com/login/oauth/access_token";
+const GITHUB_USER_URL = "https://api.github.com/user";
 const OAUTH_BRIDGE_CHANNEL = "decap-cms-oauth";
 const OAUTH_BRIDGE_STORAGE_KEY = "decap_cms_oauth_message";
 
@@ -87,6 +88,32 @@ function htmlResponse(body, status = 200) {
   });
 }
 
+function allowedGithubUsers(env) {
+  return (env.CMS_ALLOWED_GITHUB_USERS || "")
+    .split(",")
+    .map((login) => login.trim().toLowerCase())
+    .filter(Boolean);
+}
+
+async function getGithubUser(token) {
+  const response = await fetch(GITHUB_USER_URL, {
+    headers: {
+      Accept: "application/vnd.github+json",
+      Authorization: `Bearer ${token}`,
+      "User-Agent": "csayyc-decap-cms",
+      "X-GitHub-Api-Version": "2022-11-28",
+    },
+  });
+
+  const result = await response.json();
+
+  if (!response.ok || !result.login) {
+    throw new Error(result.message || "Unable to verify GitHub user");
+  }
+
+  return result;
+}
+
 export async function onRequest({ request, env }) {
   if (!env.GITHUB_CLIENT_ID || !env.GITHUB_CLIENT_SECRET) {
     return htmlResponse("Missing GitHub OAuth environment variables", 500);
@@ -128,8 +155,33 @@ export async function onRequest({ request, env }) {
     return htmlResponse(renderAuthResponse("error", result), 401);
   }
 
+  const allowlist = allowedGithubUsers(env);
+
+  if (allowlist.length === 0) {
+    return htmlResponse(renderAuthResponse("error", {
+      error: "CMS_ALLOWED_GITHUB_USERS is not configured",
+    }), 500);
+  }
+
+  let user;
+
+  try {
+    user = await getGithubUser(result.access_token);
+  } catch (error) {
+    return htmlResponse(renderAuthResponse("error", {
+      error: error.message,
+    }), 401);
+  }
+
+  if (!allowlist.includes(user.login.toLowerCase())) {
+    return htmlResponse(renderAuthResponse("error", {
+      error: `GitHub user ${user.login} is not allowed to access the CMS`,
+    }), 403);
+  }
+
   return htmlResponse(renderAuthResponse("success", {
     token: result.access_token,
     provider: "github",
+    login: user.login,
   }));
 }

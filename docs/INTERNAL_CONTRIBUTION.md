@@ -29,8 +29,10 @@ Ask the website coordinator for board, sponsor, resource, navigation, form, or l
 3. Open `Events`.
 4. Select `New Events`.
 5. Complete the event fields.
-6. Save and publish.
-7. Check the live page after deployment.
+6. Save the entry.
+7. Use the editorial workflow to move the entry through review.
+8. Publish only after the content is approved.
+9. Check the live page after deployment.
 
 ## Event Details to Prepare
 
