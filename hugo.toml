@@ -1,0 +1,56 @@
+baseURL = 'https://csacalgary.org/'
+locale = 'en-ca'
+title = 'CSA Calgary Chapter'
+enableRobotsTXT = true
+buildFuture = true
+summaryLength = 24
+
+[params]
+  description = 'Cloud Security Alliance Calgary Chapter connects cloud security professionals across Calgary and Alberta.'
+  email = 'hello@csacalgary.org'
+  linkedin = 'https://www.linkedin.com/groups/18361060/'
+  meetup = 'https://www.meetup.com/'
+  formspreeEndpoint = ''
+  web3formsKey = ''
+
+[menus]
+  [[menus.main]]
+    name = 'About'
+    pageRef = '/about'
+    weight = 10
+  [[menus.main]]
+    name = 'Chapter Overview'
+    pageRef = '/about'
+    parent = 'About'
+    weight = 10
+  [[menus.main]]
+    name = 'Board of Directors'
+    pageRef = '/about/board'
+    parent = 'About'
+    weight = 20
+  [[menus.main]]
+    name = 'Events'
+    pageRef = '/events'
+    weight = 30
+  [[menus.main]]
+    name = 'Get Involved'
+    pageRef = '/get-involved'
+    weight = 40
+  [[menus.main]]
+    name = 'Sponsors'
+    pageRef = '/sponsors'
+    parent = 'Get Involved'
+    weight = 10
+  [[menus.main]]
+    name = 'Volunteer'
+    pageRef = '/get-involved/volunteer'
+    parent = 'Get Involved'
+    weight = 20
+  [[menus.main]]
+    name = 'Resources'
+    pageRef = '/resources'
+    weight = 50
+  [[menus.main]]
+    name = 'Contact'
+    pageRef = '/contact'
+    weight = 60

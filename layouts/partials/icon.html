@@ -1,0 +1,25 @@
+{{ $name := .name }}
+{{ $class := .class | default "h-5 w-5" }}
+{{ if eq $name "linkedin" }}
+  <svg class="{{ $class }}" aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5.001 2.5 2.5 0 0 1 0-5ZM3 9h4v12H3V9Zm6.5 0h3.8v1.7h.1c.5-1 1.8-2 3.7-2 4 0 4.7 2.6 4.7 6V21h-4v-5.6c0-1.3 0-3-1.9-3s-2.2 1.5-2.2 2.9V21h-4V9Z"/></svg>
+{{ else if eq $name "meetup" }}
+  <svg class="{{ $class }}" aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M16.2 5.8c1.7 0 2.9 1 3.2 2.7.8.2 1.5.9 1.5 1.9 0 .8-.4 1.5-1.1 1.8l-.9 4.4c-.3 1.5-1.3 2.4-2.8 2.4-1.1 0-2-.5-2.5-1.5-.8 1-1.8 1.5-3.1 1.5-1.5 0-2.5-.7-3-2-.6.6-1.3.9-2.2.9-1.8 0-2.9-1.4-2.5-3.2l1.2-5.9C4.4 7 5.6 6 7.2 6c1.1 0 2 .5 2.5 1.5.8-1.1 1.8-1.7 3.1-1.7 1.4 0 2.4.7 2.9 1.9.1-1.1.2-1.9.5-1.9Zm-8.7 4.1-1.1 5.4c-.1.5.1.9.6.9s.8-.3 1-.9L9 10.2c.1-.5-.1-.9-.6-.9s-.8.2-.9.6Zm5.3-.1-1.1 5.5c-.1.5.1.9.6.9.4 0 .8-.3.9-.9l1.1-5.3c.1-.5-.1-.9-.6-.9-.4 0-.8.2-.9.7Zm5.1.4-.9 4.6c-.1.5.1.9.6.9s.8-.3.9-.9l.8-4.1c.1-.5-.1-.9-.6-.9-.4 0-.7.1-.8.4Z"/></svg>
+{{ else if eq $name "calendar" }}
+  <svg class="{{ $class }}" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 2v4M16 2v4M3 10h18"/><rect x="3" y="4" width="18" height="18" rx="3"/></svg>
+{{ else if eq $name "users" }}
+  <svg class="{{ $class }}" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+{{ else if eq $name "mic" }}
+  <svg class="{{ $class }}" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="2" width="6" height="11" rx="3"/><path d="M5 10a7 7 0 0 0 14 0M12 17v5M8 22h8"/></svg>
+{{ else if eq $name "briefcase" }}
+  <svg class="{{ $class }}" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 6V5a2 2 0 0 1 2-2h0a2 2 0 0 1 2 2v1"/><rect x="3" y="6" width="18" height="14" rx="2"/><path d="M3 12h18"/></svg>
+{{ else if eq $name "arrow" }}
+  <svg class="{{ $class }}" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+{{ else if eq $name "map-pin" }}
+  <svg class="{{ $class }}" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 10c0 6-8 12-8 12S4 16 4 10a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+{{ else if eq $name "globe" }}
+  <svg class="{{ $class }}" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+{{ else if eq $name "star" }}
+  <svg class="{{ $class }}" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+{{ else if eq $name "share" }}
+  <svg class="{{ $class }}" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
+{{ end }}

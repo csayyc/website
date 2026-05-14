@@ -1,0 +1,52 @@
+{{ define "main" }}
+  <section class="bg-navy text-white">
+    <div class="container-premium grid gap-10 py-16 lg:grid-cols-[0.88fr_1.12fr] lg:items-center">
+      <div>
+        <p class="eyebrow">Community</p>
+        <h1 class="mt-4 text-4xl font-extrabold tracking-tight sm:text-5xl">{{ .Title }}</h1>
+        <p class="mt-5 max-w-2xl text-base leading-7 text-white/75 sm:text-lg sm:leading-8">{{ .Params.description }}</p>
+        <div class="mt-8 flex flex-wrap gap-3 text-sm font-bold text-white/75">
+          <a href="#volunteer" class="rounded-full border border-white/20 px-4 py-2 transition hover:border-white/40 hover:text-white">Volunteer</a>
+          <a href="#speak" class="rounded-full border border-white/20 px-4 py-2 transition hover:border-white/40 hover:text-white">Speak</a>
+          <a href="#sponsor" class="rounded-full border border-white/20 px-4 py-2 transition hover:border-white/40 hover:text-white">Sponsor</a>
+        </div>
+        <p class="mt-6 text-sm text-white/40">100+ members &middot; Events since 2026</p>
+      </div>
+      <div class="relative min-h-[300px] overflow-hidden rounded-3xl border border-white/15 bg-charcoal shadow-[0_30px_90px_rgba(0,0,0,0.34)] ring-1 ring-white/10 sm:min-h-[380px]">
+        <img src="{{ "/images/volunteer.jpg" | relURL }}" alt="CSA Calgary volunteers and community contributors" class="absolute inset-0 h-full w-full object-cover">
+        <div class="absolute inset-0 bg-gradient-to-t from-charcoal/55 via-charcoal/5 to-transparent"></div>
+        <div class="absolute bottom-5 left-5 right-5">
+          <p class="inline-flex rounded-full bg-orange px-3 py-1 text-xs font-bold uppercase tracking-[0.18em] text-white shadow-[0_8px_20px_rgba(0,0,0,0.28)]">Build With Us</p>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="section">
+    <div class="container-premium grid gap-8 lg:grid-cols-[1fr_0.85fr]">
+      <div class="prose prose-slate max-w-none prose-a:text-orange sm:prose-lg">
+        <p>CSA Calgary depends on volunteers and contributors. You can help by attending events, proposing talks, joining the organizing team, supporting venue logistics, or connecting the chapter with local security leaders.</p>
+        <h3 id="volunteer">Volunteer</h3>
+        <p>Join the organizing team to help run events, plan content, and support venue logistics. This is how the chapter stays running — and it's a great way to meet the Calgary security community up close.</p>
+        <h3 id="speak">Speak</h3>
+        <p>Got expertise in cloud security, compliance, DevSecOps, or a related domain? Submit a talk or panel topic. We welcome practitioners at all levels — beginner-friendly topics are especially valued.</p>
+        <h3 id="sponsor">Sponsor</h3>
+        <p>Help make CSA Calgary programming accessible by supporting venues, refreshments, speaker travel, or student access. <a href="{{ "/sponsors/" | relURL }}">See sponsorship tiers →</a></p>
+      </div>
+      <aside class="card h-fit">
+        <p class="eyebrow">Start Here</p>
+        <h2 class="mt-3 text-3xl font-extrabold text-navy">Help shape the chapter.</h2>
+        <div class="mt-6 grid gap-4 text-sm sm:gap-5">
+          {{ range slice (dict "label" "Attend an event" "sub" "No commitment — just show up and learn" "href" "/events/") (dict "label" "Volunteer with us" "sub" "Help run events and shape programming" "href" "/contact/#contact-form") (dict "label" "Propose a talk" "sub" "Share your cloud security expertise" "href" "/contact/") (dict "label" "Sponsor programming" "sub" "Support accessible security education" "href" "/sponsors/") }}
+            <a class="group flex items-center justify-between rounded-2xl bg-surface px-4 py-4 font-semibold text-navy transition hover:bg-slate-100 hover:shadow-md" href="{{ .href | relURL }}">
+              <span>
+                {{ .label }}
+                <span class="mt-0.5 block text-xs font-normal text-csa-slate">{{ .sub }}</span>
+              </span>
+              <svg class="ml-3 h-4 w-4 shrink-0 text-orange opacity-0 transition group-hover:opacity-100 group-hover:translate-x-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+            </a>
+          {{ end }}
+        </div>
+      </aside>
+    </div>
+  </section>
+{{ end }}

@@ -1,0 +1,189 @@
+{{ define "main" }}
+  {{/* ── Resolve optional fields ── */}}
+  {{ $rsvpURL := .Params.meetup_url | default .Params.rsvp_url }}
+  {{ $venue := .Params.venue | default .Params.location }}
+  {{ $venueAddr := .Params.venue_address }}
+
+  {{/* ── Hero ── */}}
+  <section class="event-hero">
+
+    {{/* Left panel */}}
+    <div class="event-hero-left">
+
+      {{/* Eyebrow */}}
+      {{ if .Date.After now }}
+        <span class="event-eyebrow">
+          <span class="event-eyebrow-dot"></span>Upcoming Event
+        </span>
+      {{ else }}
+        <span class="event-eyebrow event-eyebrow--past">
+          <span class="event-eyebrow-dot event-eyebrow-dot--past"></span>Past Event
+        </span>
+      {{ end }}
+
+      {{/* Event identity */}}
+      <div class="event-hero-content relative z-10">
+        <h1 class="event-hero-title">{{ .Title }}</h1>
+        <div class="event-hero-meta mt-3">
+          <div class="event-hero-meta-item">
+            {{ partial "icon.html" (dict "name" "calendar" "class" "h-3.5 w-3.5 shrink-0 opacity-60") }}
+            {{ .Date.Format "Monday, January 2, 2006" }}{{ with .Params.time }} · {{ . }}{{ end }}
+          </div>
+          {{ with $venue }}
+            <div class="event-hero-meta-item">
+              {{ partial "icon.html" (dict "name" "map-pin" "class" "h-3.5 w-3.5 shrink-0 opacity-60") }}
+              {{ . }}{{ with $venueAddr }}, {{ . }}{{ end }}
+            </div>
+          {{ end }}
+          {{ with .Params.capacity }}
+            <div class="event-hero-meta-item">
+              {{ partial "icon.html" (dict "name" "users" "class" "h-3.5 w-3.5 shrink-0 opacity-60") }}
+              ~{{ . }} seats available
+            </div>
+          {{ end }}
+        </div>
+      </div>
+
+      {{/* Action buttons */}}
+      <div class="event-hero-actions relative z-10">
+        {{ if $rsvpURL }}
+          <a href="{{ $rsvpURL }}" class="btn-rsvp" target="_blank" rel="noopener noreferrer">RSVP</a>
+        {{ else }}
+          <span class="btn-coming-soon">RSVP coming soon</span>
+        {{ end }}
+        {{ if .Params.linkedin_url }}
+          <a href="{{ .Params.linkedin_url }}" class="btn-linkedin" target="_blank" rel="noopener noreferrer">
+            {{ partial "icon.html" (dict "name" "linkedin" "class" "h-4 w-4") }}
+            View on LinkedIn
+          </a>
+        {{ else }}
+          <span class="btn-coming-soon">LinkedIn coming soon</span>
+        {{ end }}
+        <button class="btn-share" id="event-share-btn" type="button">
+          {{ partial "icon.html" (dict "name" "share" "class" "h-4 w-4") }}
+          Share
+        </button>
+      </div>
+
+    </div>
+
+    {{/* Right panel — gradient always; photo on top when image is set */}}
+    <div class="event-hero-right{{ with .Params.image }} event-hero-right--photo{{ end }}">
+      {{ with .Params.image }}
+        <img src="{{ . }}" alt="{{ $.Title }}" class="absolute inset-0 h-full w-full object-cover">
+      {{ end }}
+      <div class="event-hero-right-texture"></div>
+      <div class="event-hero-right-glow"></div>
+      <div class="event-hero-right-blend"></div>
+      {{ with .Params.event_type }}
+        <span class="event-hero-tag">{{ . }}</span>
+      {{ end }}
+    </div>
+
+  </section>
+
+  {{/* ── Body ── */}}
+  <div class="event-body">
+
+    <div class="event-main">
+
+      {{/* About */}}
+      <div class="event-about">
+        <p class="section-label">About This Event</p>
+        <div class="prose prose-slate max-w-none prose-a:text-orange">{{ .Content }}</div>
+      </div>
+
+      {{/* Agenda — only when front matter provides it */}}
+      {{ with .Params.agenda }}
+        <div class="event-agenda">
+          <p class="section-label">Agenda</p>
+          <div class="agenda-list">
+            {{ range . }}
+              <div class="agenda-item">
+                <div class="agenda-time">{{ .time }}</div>
+                <div>
+                  <div class="agenda-topic">{{ .topic }}</div>
+                  {{ with .desc }}<div class="agenda-desc">{{ . }}</div>{{ end }}
+                </div>
+              </div>
+            {{ end }}
+          </div>
+        </div>
+      {{ end }}
+
+    </div>
+
+    {{/* Sidebar */}}
+    <aside class="event-sidebar">
+      <div class="event-sidebar-card">
+
+        <div class="sidebar-field">
+          <p class="sidebar-label">Date & Time</p>
+          <p class="sidebar-value">{{ .Date.Format "Monday, January 2, 2006" }}</p>
+          {{ with .Params.time }}<p class="sidebar-sub">{{ . }}</p>{{ end }}
+        </div>
+
+        {{ with $venue }}
+          <div class="sidebar-field">
+            <p class="sidebar-label">Venue</p>
+            <p class="sidebar-value">{{ . }}</p>
+            {{ with $venueAddr }}<p class="sidebar-sub">{{ . }}</p>{{ end }}
+          </div>
+        {{ end }}
+
+        {{ with .Params.capacity }}
+          <div class="sidebar-field">
+            <p class="sidebar-label">Capacity</p>
+            <p class="sidebar-value">~{{ . }} seats</p>
+            <div class="event-capacity-bar-wrap">
+              <div class="event-capacity-bar"></div>
+            </div>
+            <p class="sidebar-sub mt-1">Fills quickly — RSVP early.</p>
+          </div>
+        {{ end }}
+
+        <div class="sidebar-actions">
+          {{ if $rsvpURL }}
+            <a href="{{ $rsvpURL }}" class="sidebar-btn-rsvp" target="_blank" rel="noopener noreferrer">RSVP</a>
+          {{ else }}
+            <span class="sidebar-btn-rsvp sidebar-btn-rsvp--disabled">RSVP coming soon</span>
+          {{ end }}
+          {{ if .Params.linkedin_url }}
+            <a href="{{ .Params.linkedin_url }}" class="sidebar-btn-linkedin" target="_blank" rel="noopener noreferrer">
+              {{ partial "icon.html" (dict "name" "linkedin" "class" "h-4 w-4") }}
+              View on LinkedIn
+            </a>
+          {{ else }}
+            <span class="sidebar-btn-linkedin sidebar-btn-linkedin--disabled">LinkedIn coming soon</span>
+          {{ end }}
+        </div>
+
+      </div>
+    </aside>
+
+  </div>
+
+  <script>
+    (function () {
+      var btn = document.getElementById('event-share-btn');
+      if (!btn) return;
+      var shareData = {
+        title: {{ .Title | jsonify }},
+        text: {{ with .Params.description }}{{ . | jsonify }}{{ else }}{{ .Title | jsonify }}{{ end }},
+        url: {{ .Permalink | jsonify }}
+      };
+      btn.addEventListener('click', function () {
+        if (navigator.share) {
+          navigator.share(shareData).catch(function () {});
+        } else {
+          navigator.clipboard.writeText(shareData.url).then(function () {
+            var icon = btn.querySelector('svg');
+            var orig = btn.innerHTML;
+            btn.textContent = 'Link copied!';
+            setTimeout(function () { btn.innerHTML = orig; }, 2000);
+          }).catch(function () {});
+        }
+      });
+    })();
+  </script>
+{{ end }}

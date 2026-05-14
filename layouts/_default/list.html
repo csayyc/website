@@ -1,0 +1,21 @@
+{{ define "main" }}
+  <section class="bg-navy text-white">
+    <div class="container-premium py-16">
+      <p class="eyebrow">{{ .Section | humanize }}</p>
+      <h1 class="mt-4 max-w-4xl text-4xl font-extrabold tracking-tight sm:text-5xl">{{ .Title }}</h1>
+      {{ with .Params.description }}<p class="mt-5 max-w-2xl text-base leading-7 text-white/75 sm:text-lg">{{ . }}</p>{{ end }}
+    </div>
+  </section>
+  <section class="section">
+    <div class="container-premium">
+      <article class="prose prose-slate max-w-none prose-a:text-orange">{{ .Content }}</article>
+      {{ if .Pages }}
+        <div class="mt-10 grid gap-6 md:grid-cols-2">
+          {{ range .Pages.ByDate.Reverse }}
+            {{ partial "event-card.html" . }}
+          {{ end }}
+        </div>
+      {{ end }}
+    </div>
+  </section>
+{{ end }}

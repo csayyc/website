@@ -1,0 +1,27 @@
+<article class="event-card">
+  <div class="event-card-band">
+    {{ with .Params.event_type }}<span class="event-card-type">{{ . }}</span>{{ end }}
+    <p class="event-card-date">
+      {{ partial "icon.html" (dict "name" "calendar" "class" "h-3.5 w-3.5 opacity-70") }}
+      {{ .Date.Format "Jan 2, 2006" }}
+    </p>
+  </div>
+  <div class="event-card-body">
+    <h2 class="event-card-title">
+      <a href="{{ .RelPermalink }}" class="transition hover:text-orange">{{ .Title }}</a>
+    </h2>
+    {{ $loc := .Params.venue | default .Params.location }}
+    {{ with $loc }}
+      <p class="event-card-location">
+        {{ partial "icon.html" (dict "name" "map-pin" "class" "h-3.5 w-3.5 shrink-0") }}
+        {{ . }}
+      </p>
+    {{ end }}
+    <p class="event-card-desc">{{ .Summary }}</p>
+    <div class="event-card-footer">
+      <a href="{{ .RelPermalink }}" class="event-card-cta">
+        View Details {{ partial "icon.html" (dict "name" "arrow" "class" "h-4 w-4") }}
+      </a>
+    </div>
+  </div>
+</article>

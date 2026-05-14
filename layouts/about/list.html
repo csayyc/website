@@ -1,0 +1,63 @@
+{{ define "main" }}
+  <section class="bg-navy text-white">
+    <div class="container-premium grid gap-10 py-16 lg:grid-cols-[0.85fr_1.15fr] lg:items-end">
+      <div>
+        <p class="eyebrow">About The Chapter</p>
+        <h1 class="mt-4 text-4xl font-extrabold tracking-tight sm:text-5xl">{{ .Title }}</h1>
+      </div>
+      <p class="text-base leading-7 text-white/75 sm:text-lg sm:leading-8">{{ .Params.description }}</p>
+    </div>
+  </section>
+
+  {{ $parts := split .Content "<h2" }}
+  {{ $intro := index $parts 0 }}
+  {{ $sections := after 1 $parts }}
+  <section class="section">
+    <div class="container-premium">
+      <div class="grid gap-10 lg:grid-cols-[0.72fr_1.28fr] lg:items-start">
+        <aside class="grid h-fit gap-4 lg:sticky lg:top-28">
+          <div class="card transition hover:-translate-y-1 hover:border-orange/40 hover:shadow-[0_28px_70px_-32px_rgba(242,125,66,0.55)]">
+            <div class="mb-4 flex h-11 w-11 items-center justify-center rounded-2xl bg-orange/10 text-orange">{{ partial "icon.html" (dict "name" "map-pin" "class" "h-5 w-5") }}</div>
+            <p class="eyebrow">Local Focus</p>
+            <p class="mt-3 text-csa-slate">Serving Calgary and surrounding communities with programming built for Alberta's cloud security practitioners.</p>
+          </div>
+          <div class="card transition hover:-translate-y-1 hover:border-orange/40 hover:shadow-[0_28px_70px_-32px_rgba(242,125,66,0.55)]">
+            <div class="mb-4 flex h-11 w-11 items-center justify-center rounded-2xl bg-orange/10 text-orange">{{ partial "icon.html" (dict "name" "globe" "class" "h-5 w-5") }}</div>
+            <p class="eyebrow">Global Alignment</p>
+            <p class="mt-3 text-csa-slate">Connected to CSA's worldwide research, vendor-neutral education, certifications, and chapter network.</p>
+          </div>
+          <div class="card transition hover:-translate-y-1 hover:border-orange/40 hover:shadow-[0_28px_70px_-32px_rgba(242,125,66,0.55)]">
+            <div class="mb-4 flex h-11 w-11 items-center justify-center rounded-2xl bg-orange/10 text-orange">{{ partial "icon.html" (dict "name" "star" "class" "h-5 w-5") }}</div>
+            <p class="eyebrow">Member Value</p>
+            <p class="mt-3 text-csa-slate">Education, networking, speaking opportunities, volunteering, and research contribution. All free to access.</p>
+          </div>
+          <a href="{{ "/get-involved/" | relURL }}" class="btn-primary w-full justify-center">Get Involved →</a>
+          <a href="{{ "/about/board/" | relURL }}" class="inline-flex w-full items-center justify-center rounded-full border border-navy/25 bg-white px-6 py-3 text-sm font-bold text-navy shadow-sm transition hover:-translate-y-0.5 hover:border-navy hover:bg-navy hover:text-white focus:outline-none focus:ring-4 focus:ring-navy/15">Meet the Board →</a>
+        </aside>
+        <div class="space-y-8">
+          <article class="prose prose-slate max-w-none prose-a:text-orange prose-h2:text-navy prose-li:marker:text-orange sm:prose-lg">{{ $intro | safeHTML }}</article>
+          {{ range $section := $sections }}
+            {{ $sectionHTML := printf "<h2%s" $section }}
+            {{ if in $sectionHTML "Connected to the Global CSA Community" }}
+              <section class="overflow-hidden rounded-[2rem] bg-navy text-white shadow-premium">
+                <div class="grid gap-0 lg:grid-cols-[0.9fr_1.1fr]">
+                  <div class="relative p-8 sm:p-10">
+                    <div class="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(242,125,66,0.26),transparent_34%),linear-gradient(135deg,rgba(45,99,149,0.55),transparent)]"></div>
+                    <div class="relative">
+                      <p class="eyebrow">Global Network</p>
+                      <h2 class="mt-3 text-3xl font-extrabold tracking-tight sm:text-4xl">Local chapter. Global cloud security ecosystem.</h2>
+                      <p class="mt-5 text-white/75">CSA Calgary connects regional practitioners to CSA's global research, education, credentials, frameworks, and chapter network.</p>
+                    </div>
+                  </div>
+                  <article class="prose max-w-none bg-white p-8 text-csa-slate prose-a:text-orange prose-h2:hidden prose-p:leading-7 sm:prose-lg sm:p-10 sm:prose-p:leading-8">{{ $sectionHTML | safeHTML }}</article>
+                </div>
+              </section>
+            {{ else }}
+              <article class="prose prose-slate max-w-none rounded-[2rem] border border-slate-200 bg-white p-8 shadow-premium prose-a:text-orange prose-h2:text-navy prose-li:marker:text-orange sm:prose-lg sm:p-10">{{ $sectionHTML | safeHTML }}</article>
+            {{ end }}
+          {{ end }}
+        </div>
+      </div>
+    </div>
+  </section>
+{{ end }}
