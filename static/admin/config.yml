@@ -17,10 +17,26 @@ collections:
     fields:
       - { label: "Title", name: "title", widget: "string" }
       - { label: "Date", name: "date", widget: "datetime" }
+      - { label: "Draft", name: "draft", widget: "boolean", default: true }
+      - { label: "Short Description", name: "description", widget: "text" }
       - { label: "Location", name: "location", widget: "string" }
       - { label: "Meetup RSVP Link", name: "meetup_url", widget: "string", required: false }
       - { label: "LinkedIn Event Link", name: "linkedin_url", widget: "string", required: false }
-      - { label: "Description", name: "body", widget: "markdown" }
+      - { label: "Hero Image", name: "image", widget: "image", required: false }
+      - { label: "Display Time", name: "time", widget: "string", required: false, hint: "Example: 6:00 - 9:00 PM MDT" }
+      - { label: "Venue", name: "venue", widget: "string", required: false }
+      - { label: "Venue Address", name: "venue_address", widget: "string", required: false }
+      - { label: "Capacity", name: "capacity", widget: "number", value_type: "int", required: false }
+      - { label: "Event Type", name: "event_type", widget: "select", required: false, options: ["Meetup", "Workshop", "Panel", "Summit", "Training", "Networking"] }
+      - label: "Agenda"
+        name: "agenda"
+        widget: "list"
+        required: false
+        fields:
+          - { label: "Time", name: "time", widget: "string" }
+          - { label: "Topic", name: "topic", widget: "string" }
+          - { label: "Description", name: "desc", widget: "text", required: false }
+      - { label: "Event Details", name: "body", widget: "markdown" }
   - name: "settings"
     label: "Settings"
     files:
