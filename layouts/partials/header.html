@@ -3,27 +3,12 @@
     <a href="{{ "/" | relURL }}" class="flex items-center rounded-xl bg-white px-2.5 py-1.5 shadow-sm ring-1 ring-white/40 transition hover:bg-offwhite focus:outline-none focus:ring-2 focus:ring-white/70 sm:rounded-2xl sm:px-3 sm:py-2" aria-label="CSA Calgary home">
       <img src="{{ "images/logo.svg" | relURL }}" alt="" class="h-8 w-auto sm:h-11">
     </a>
-    <details class="group relative md:hidden">
-      <summary class="flex cursor-pointer list-none items-center gap-2 rounded-full border border-white/25 px-4 py-2 text-sm font-semibold">
-        Menu
-        <span class="flex h-5 w-5 items-center justify-center rounded-full bg-orange text-white transition group-open:rotate-180">
-          <svg class="h-3.5 w-3.5" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="m6 9 6 6 6-6"/></svg>
-        </span>
-      </summary>
-      <nav class="absolute right-0 mt-3 w-64 rounded-2xl bg-white p-3 text-charcoal shadow-premium">
-        {{ range site.Menus.main }}
-          <a class="block rounded-xl px-4 py-3 text-sm font-semibold hover:bg-surface" href="{{ .URL }}">{{ .Name }}</a>
-          {{ range .Children }}
-            <a class="ml-4 flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-semibold text-csa-slate hover:bg-surface hover:text-navy" href="{{ .URL }}">
-              <span class="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-orange/10 text-orange">
-                <svg class="h-3 w-3" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="m9 6 6 6-6 6"/></svg>
-              </span>
-              {{ .Name }}
-            </a>
-          {{ end }}
-        {{ end }}
-      </nav>
-    </details>
+    <button id="mobile-menu-btn" type="button" aria-expanded="false" aria-controls="mobile-nav" aria-label="Open menu" class="flex items-center gap-2 rounded-full border border-white/25 px-4 py-2 text-sm font-semibold transition hover:border-white/40 focus:outline-none focus:ring-2 focus:ring-white/40 md:hidden">
+      Menu
+      <span class="flex h-5 w-5 items-center justify-center rounded-full bg-orange text-white">
+        <svg class="h-3.5 w-3.5" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+      </span>
+    </button>
     <nav class="hidden items-center gap-2 md:flex">
       {{ range site.Menus.main }}
         {{ if .HasChildren }}
@@ -47,3 +32,82 @@
     </nav>
   </div>
 </header>
+
+<div id="mobile-menu-backdrop" class="pointer-events-none fixed inset-0 z-[60] bg-charcoal/60 opacity-0 transition-opacity duration-200 md:hidden" aria-hidden="true"></div>
+
+<div id="mobile-nav" role="dialog" aria-modal="true" aria-label="Site navigation" tabindex="-1" class="fixed inset-y-0 right-0 z-[70] flex h-full w-[88vw] max-w-sm translate-x-full flex-col bg-white text-charcoal shadow-[0_30px_90px_rgba(0,0,0,0.34)] transition-transform duration-200 ease-out md:hidden">
+  <div class="flex items-center justify-between border-b border-slate-200 px-5 py-4">
+    <span class="text-xs font-bold uppercase tracking-[0.22em] text-orange">Menu</span>
+    <button id="mobile-menu-close" type="button" aria-label="Close menu" class="flex h-9 w-9 items-center justify-center rounded-full border border-slate-200 text-charcoal transition hover:bg-surface focus:outline-none focus:ring-2 focus:ring-orange/40">
+      <svg class="h-5 w-5" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m6 6 12 12M18 6 6 18"/></svg>
+    </button>
+  </div>
+  <nav class="flex-1 overflow-y-auto p-3">
+    {{ range site.Menus.main }}
+      <a href="{{ .URL }}" class="block rounded-xl px-4 py-3 text-sm font-semibold text-navy transition hover:bg-surface">{{ .Name }}</a>
+      {{ range .Children }}
+        <a href="{{ .URL }}" class="ml-4 flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-semibold text-csa-slate transition hover:bg-surface hover:text-navy">
+          <span class="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-orange/10 text-orange">
+            <svg class="h-3 w-3" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="m9 6 6 6-6 6"/></svg>
+          </span>
+          {{ .Name }}
+        </a>
+      {{ end }}
+    {{ end }}
+  </nav>
+  <div class="border-t border-slate-200 p-4">
+    <a href="{{ "/get-involved/" | relURL }}" class="btn-primary w-full justify-center">Join the Chapter</a>
+  </div>
+</div>
+
+<script>
+  (function () {
+    const btn = document.getElementById('mobile-menu-btn');
+    const drawer = document.getElementById('mobile-nav');
+    const backdrop = document.getElementById('mobile-menu-backdrop');
+    const closeBtn = document.getElementById('mobile-menu-close');
+    if (!btn || !drawer || !backdrop || !closeBtn) return;
+    let lastFocused = null;
+
+    function focusables() {
+      return Array.from(drawer.querySelectorAll('a, button, summary, [tabindex]:not([tabindex="-1"])'))
+        .filter(el => !el.hasAttribute('disabled') && el.offsetParent !== null);
+    }
+
+    function open() {
+      lastFocused = document.activeElement;
+      btn.setAttribute('aria-expanded', 'true');
+      drawer.classList.remove('translate-x-full');
+      backdrop.classList.remove('opacity-0', 'pointer-events-none');
+      backdrop.classList.add('opacity-100');
+      document.body.style.overflow = 'hidden';
+      setTimeout(() => closeBtn.focus(), 60);
+      document.addEventListener('keydown', onKey);
+    }
+
+    function close() {
+      btn.setAttribute('aria-expanded', 'false');
+      drawer.classList.add('translate-x-full');
+      backdrop.classList.add('opacity-0', 'pointer-events-none');
+      backdrop.classList.remove('opacity-100');
+      document.body.style.overflow = '';
+      document.removeEventListener('keydown', onKey);
+      if (lastFocused && typeof lastFocused.focus === 'function') lastFocused.focus();
+    }
+
+    function onKey(e) {
+      if (e.key === 'Escape') { e.preventDefault(); close(); return; }
+      if (e.key !== 'Tab') return;
+      const items = focusables();
+      if (!items.length) return;
+      const first = items[0], last = items[items.length - 1];
+      if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+      else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+    }
+
+    btn.addEventListener('click', open);
+    closeBtn.addEventListener('click', close);
+    backdrop.addEventListener('click', close);
+    drawer.querySelectorAll('a').forEach(a => a.addEventListener('click', close));
+  })();
+</script>
