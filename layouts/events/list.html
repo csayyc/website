@@ -1,0 +1,32 @@
+{{ define "main" }}
+  <section class="bg-navy text-white">
+    <div class="container-premium grid gap-10 py-16 lg:grid-cols-[0.88fr_1.12fr] lg:items-center">
+      <div>
+        <p class="eyebrow">{{ .Section | humanize }}</p>
+        <h1 class="mt-4 text-4xl font-extrabold tracking-tight sm:text-5xl">{{ .Title }}</h1>
+        <p class="mt-5 max-w-2xl text-base leading-7 text-white/75 sm:text-lg">{{ .Params.description }}</p>
+        <div class="mt-8 flex flex-wrap gap-3 text-sm font-bold text-white/75">
+          <span class="rounded-full border border-white/20 px-4 py-2">Technical talks</span>
+          <span class="rounded-full border border-white/20 px-4 py-2">Workshops</span>
+          <span class="rounded-full border border-white/20 px-4 py-2">Community networking</span>
+        </div>
+      </div>
+      <div class="event-hero-image">
+        <img src="{{ "/images/events.jpg" | relURL }}" alt="CSA Calgary community event" class="absolute inset-0 h-full w-full object-cover">
+        <div class="absolute inset-0 bg-gradient-to-t from-charcoal/45 via-transparent to-transparent"></div>
+        <div class="absolute bottom-5 left-5 right-5">
+          <p class="inline-flex rounded-full bg-orange px-3 py-1 text-xs font-bold uppercase tracking-[0.18em] text-white shadow-[0_8px_20px_rgba(0,0,0,0.28)]">CSA Calgary Events</p>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="section">
+    <div class="container-premium grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+      {{ range .Pages.ByDate.Reverse }}
+        {{ partial "event-card.html" . }}
+      {{ else }}
+        <div class="card lg:col-span-3">Events will be published here as the chapter calendar is finalized.</div>
+      {{ end }}
+    </div>
+  </section>
+{{ end }}

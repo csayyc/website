@@ -1,0 +1,4 @@
+# Canonical domain redirects for Cloudflare Pages.
+https://csacalgarychapter.org/* https://csacalgary.org/:splat 301
+https://www.csacalgarychapter.org/* https://csacalgary.org/:splat 301
+https://www.csacalgary.org/* https://csacalgary.org/:splat 301

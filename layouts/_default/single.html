@@ -1,0 +1,12 @@
+{{ define "main" }}
+  <section class="bg-navy text-white">
+    <div class="container-premium py-16">
+      <p class="eyebrow">{{ .Section | humanize }}</p>
+      <h1 class="mt-4 max-w-4xl text-4xl font-extrabold tracking-tight sm:text-5xl">{{ .Title }}</h1>
+      {{ with .Date }}<p class="mt-5 text-white/70">{{ .Format "January 2, 2006" }}</p>{{ end }}
+    </div>
+  </section>
+  <section class="section">
+    <article class="container-premium prose prose-slate max-w-4xl prose-a:text-orange">{{ .Content }}</article>
+  </section>
+{{ end }}

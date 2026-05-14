@@ -1,0 +1,74 @@
+{{ define "main" }}
+  <section class="bg-navy text-white">
+    <div class="container-premium grid gap-8 py-16 lg:grid-cols-[0.95fr_1.05fr] lg:items-center">
+      <div>
+        <p class="eyebrow">Partnership</p>
+        <h1 class="mt-4 text-4xl font-extrabold tracking-tight sm:text-5xl">{{ .Title }}</h1>
+        <p class="mt-5 max-w-2xl text-base leading-7 text-white/75 sm:text-lg">{{ .Params.description }}</p>
+        <div class="mt-8 flex flex-wrap gap-3 text-sm font-bold text-white/75">
+          <a href="#platinum" class="rounded-full border border-white/20 px-4 py-2 transition hover:border-white/40 hover:text-white">Platinum</a>
+          <a href="#gold" class="rounded-full border border-white/20 px-4 py-2 transition hover:border-white/40 hover:text-white">Gold</a>
+          <a href="#silver" class="rounded-full border border-white/20 px-4 py-2 transition hover:border-white/40 hover:text-white">Silver</a>
+        </div>
+      </div>
+      <div class="relative min-h-[300px] overflow-hidden rounded-3xl border border-white/15 bg-charcoal shadow-[0_30px_90px_rgba(0,0,0,0.34)] ring-1 ring-white/10 sm:min-h-[380px]">
+        <div class="absolute inset-0 bg-gradient-to-br from-sky/45 via-navy to-charcoal"></div>
+        <img src="{{ "/images/sponsors.jpg" | relURL }}" alt="CSA Calgary sponsorship community" class="absolute inset-0 z-10 h-full w-full object-contain">
+        <div class="absolute inset-0 bg-gradient-to-t from-charcoal/30 via-transparent to-transparent"></div>
+        <div class="absolute bottom-5 left-5 right-5 z-20">
+          <p class="inline-flex rounded-full bg-orange px-3 py-1 text-xs font-bold uppercase tracking-[0.18em] text-white shadow-[0_8px_20px_rgba(0,0,0,0.28)]">Partner with us</p>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="section">
+    <div class="container-premium">
+      <div class="mb-10 grid gap-6 md:grid-cols-3">
+        <div class="rounded-2xl bg-surface p-6">
+          <div class="mb-3 flex h-10 w-10 items-center justify-center rounded-xl bg-orange/10 text-orange">{{ partial "icon.html" (dict "name" "users" "class" "h-5 w-5") }}</div>
+          <h3 class="font-bold text-navy">Reach practitioners</h3>
+          <p class="mt-1 text-sm text-csa-slate">Connect your brand with local cloud security professionals at every event.</p>
+        </div>
+        <div class="rounded-2xl bg-surface p-6">
+          <div class="mb-3 flex h-10 w-10 items-center justify-center rounded-xl bg-orange/10 text-orange">{{ partial "icon.html" (dict "name" "mic" "class" "h-5 w-5") }}</div>
+          <h3 class="font-bold text-navy">Shape programming</h3>
+          <p class="mt-1 text-sm text-csa-slate">Speaking slots and content influence help position your team as subject-matter experts.</p>
+        </div>
+        <div class="rounded-2xl bg-surface p-6">
+          <div class="mb-3 flex h-10 w-10 items-center justify-center rounded-xl bg-orange/10 text-orange">{{ partial "icon.html" (dict "name" "globe" "class" "h-5 w-5") }}</div>
+          <h3 class="font-bold text-navy">Support the community</h3>
+          <p class="mt-1 text-sm text-csa-slate">Help make high-quality cloud security education accessible to everyone in Calgary.</p>
+        </div>
+      </div>
+      <article class="prose prose-slate max-w-none prose-a:text-orange sm:prose-lg">{{ .Content }}</article>
+      <div class="mt-10 grid gap-6 md:grid-cols-3">
+        {{ range hugo.Data.sponsors }}
+          {{ $isPlatinum := eq .tier "Platinum" }}
+          <article id="{{ .tier | anchorize }}" class="card relative flex flex-col scroll-mt-28 transition hover:-translate-y-1 hover:shadow-[0_28px_70px_-32px_rgba(30,76,115,0.35)] {{ if $isPlatinum }}border-orange/40 shadow-[0_28px_70px_-32px_rgba(242,125,66,0.3)]{{ end }}">
+            {{ if $isPlatinum }}
+              <span class="absolute right-4 top-4 rounded-full bg-orange px-3 py-0.5 text-xs font-bold uppercase tracking-[0.12em] text-white">Featured</span>
+            {{ end }}
+            <div class="mb-5 flex h-12 w-12 items-center justify-center rounded-2xl bg-orange/10 text-orange">
+              {{ if $isPlatinum }}
+                {{ partial "icon.html" (dict "name" "star" "class" "h-6 w-6") }}
+              {{ else }}
+                {{ partial "icon.html" (dict "name" "briefcase" "class" "h-6 w-6") }}
+              {{ end }}
+            </div>
+            <p class="eyebrow">{{ .tier }}</p>
+            <h2 class="mt-3 text-2xl font-bold text-navy">{{ .name }}</h2>
+            <p class="mt-4 text-csa-slate">{{ .description }}</p>
+            {{ if .benefits }}
+              <ul class="mt-4 space-y-1.5 text-sm text-csa-slate">
+                {{ range .benefits }}
+                  <li class="flex items-start gap-2"><span class="mt-0.5 text-orange">✓</span>{{ . }}</li>
+                {{ end }}
+              </ul>
+            {{ end }}
+            <a href="{{ .url }}" class="mt-auto pt-6 inline-flex text-sm font-bold text-orange">Discuss Sponsorship →</a>
+          </article>
+        {{ end }}
+      </div>
+    </div>
+  </section>
+{{ end }}

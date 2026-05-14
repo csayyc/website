@@ -1,0 +1,28 @@
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ if .IsHome }}{{ site.Title }}{{ else }}{{ .Title }} | {{ site.Title }}{{ end }}</title>
+  <link rel="canonical" href="{{ .Permalink }}">
+  <meta name="description" content="{{ with .Description }}{{ . }}{{ else }}{{ site.Params.description }}{{ end }}">
+  <meta property="og:title" content="{{ if .IsHome }}{{ site.Title }}{{ else }}{{ .Title }} | {{ site.Title }}{{ end }}">
+  <meta property="og:description" content="{{ with .Description }}{{ . }}{{ else }}{{ site.Params.description }}{{ end }}">
+  <meta property="og:url" content="{{ .Permalink }}">
+  {{ $ogType := "website" }}
+  {{ $ogImage := "images/landing-b.jpg" | absURL }}
+  {{ if eq .Section "events" }}
+    {{ $ogType = "article" }}
+    {{ with .Params.image }}{{ $ogImage = . | absURL }}{{ end }}
+  {{ end }}
+  <meta property="og:type" content="{{ $ogType }}">
+  <meta property="og:image" content="{{ $ogImage }}">
+  <meta property="og:site_name" content="{{ site.Title }}">
+  {{ if eq .Section "events" }}<meta property="article:published_time" content="{{ .Date.Format "2006-01-02T15:04:05Z07:00" }}">{{ end }}
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="{{ if .IsHome }}{{ site.Title }}{{ else }}{{ .Title }} | {{ site.Title }}{{ end }}">
+  <meta name="twitter:description" content="{{ with .Description }}{{ . }}{{ else }}{{ site.Params.description }}{{ end }}">
+  <meta name="twitter:image" content="{{ $ogImage }}">
+  <link rel="icon" href="{{ "images/logo.svg" | relURL }}" type="image/svg+xml">
+  {{ $css := resources.Get "css/main.css" | css.PostCSS }}
+  {{ if hugo.IsProduction }}{{ $css = $css | minify | fingerprint }}{{ end }}
+  <link rel="stylesheet" href="{{ $css.RelPermalink }}"{{ if hugo.IsProduction }} integrity="{{ $css.Data.Integrity }}"{{ end }}>
+</head>

@@ -1,0 +1,57 @@
+<footer class="bg-navy text-white">
+  <div class="container-premium grid gap-10 py-12 md:grid-cols-[1.3fr_1fr_1fr]">
+    <div>
+      <div class="mb-4 flex items-center">
+        <img src="{{ "images/footer-logo.jpg" | relURL }}" alt="CSA Calgary logo" class="h-20 w-20 rounded-2xl object-cover">
+      </div>
+      <p class="max-w-md text-sm leading-6 text-white/70 md:text-base md:leading-7">Calgary's chapter of the world's leading cloud security organization, delivering education, community, and research-aligned programming for practitioners across Alberta.</p>
+      <p class="mt-6 text-xs text-white/45 md:text-sm">© {{ now.Year }} CSA Calgary Chapter. All rights reserved.</p>
+    </div>
+    <div>
+      <h2 class="mb-4 text-sm font-bold uppercase tracking-widest text-white/50">Explore</h2>
+      <div class="grid gap-4">
+        <div class="grid gap-2">
+          <a class="text-sm font-bold text-white hover:text-white md:text-base" href="{{ "/about/" | relURL }}">About</a>
+          <a class="pl-3 text-sm text-white/65 hover:text-white md:text-base" href="{{ "/about/" | relURL }}">Chapter Overview</a>
+          <a class="pl-3 text-sm text-white/65 hover:text-white md:text-base" href="{{ "/about/board/" | relURL }}">Board of Directors</a>
+        </div>
+        <div class="grid gap-2">
+          <a class="text-sm font-bold text-white hover:text-white md:text-base" href="{{ "/get-involved/" | relURL }}">Get Involved</a>
+          <a class="pl-3 text-sm text-white/65 hover:text-white md:text-base" href="{{ "/get-involved/volunteer/" | relURL }}">Volunteer</a>
+          <a class="pl-3 text-sm text-white/65 hover:text-white md:text-base" href="{{ "/sponsors/" | relURL }}">Sponsors</a>
+        </div>
+        <div class="grid gap-2">
+          <a class="text-sm text-white/75 hover:text-white md:text-base" href="{{ "/events/" | relURL }}">Events</a>
+          <a class="text-sm text-white/75 hover:text-white md:text-base" href="{{ "/resources/" | relURL }}">Resources</a>
+          <a class="text-sm text-white/75 hover:text-white md:text-base" href="{{ "/contact/" | relURL }}">Contact</a>
+        </div>
+      </div>
+    </div>
+    <div>
+      <h2 class="mb-4 text-sm font-bold uppercase tracking-widest text-white/50">Connect</h2>
+      <div class="grid gap-3 text-sm text-white/75 md:text-base">
+        <a href="mailto:{{ site.Params.email }}" class="hover:text-white">{{ site.Params.email }}</a>
+        <div class="flex flex-wrap gap-3 pt-2">
+          <a href="{{ site.Params.linkedin }}" class="inline-flex items-center gap-2 rounded-full border border-white/15 px-4 py-2 font-bold transition hover:-translate-y-0.5 hover:border-orange hover:bg-orange hover:text-white" target="_blank" rel="noopener noreferrer">
+            {{ partial "icon.html" (dict "name" "linkedin" "class" "h-4 w-4") }} LinkedIn
+          </a>
+          <a href="{{ site.Params.meetup }}" class="inline-flex items-center gap-2 rounded-full border border-white/15 px-4 py-2 font-bold transition hover:-translate-y-0.5 hover:border-orange hover:bg-orange hover:text-white" target="_blank" rel="noopener noreferrer">
+            {{ partial "icon.html" (dict "name" "meetup" "class" "h-4 w-4") }} Meetup
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <section class="border-t border-white/10 bg-charcoal/20 py-8">
+    <div class="container-premium">
+      <div class="relative overflow-hidden rounded-3xl border border-white/15 bg-white/[0.07] p-6 shadow-[0_24px_70px_rgba(0,0,0,0.18)] ring-1 ring-white/10 sm:p-8">
+        <div class="absolute inset-y-0 left-0 w-1.5 bg-orange"></div>
+        <p class="mb-3 text-xs font-bold uppercase tracking-[0.22em] text-orange">Land Acknowledgement</p>
+        <div class="grid gap-3 text-[0.7rem] leading-5 text-white/65 md:text-xs md:leading-6">
+          <p>The Cloud Security Alliance Calgary Region Chapter, located in the heart of Southern Alberta, both acknowledges and pays tribute to the traditional territories of the peoples of Treaty 7, which include the Blackfoot Confederacy (comprised of the Siksika, the Piikani, and the Kainai First Nations), the Tsuut’ina First Nation, and the Stoney Nakoda (including Chiniki, Bearspaw, and Goodstoney First Nations). The city of Calgary is also home to the Métis Nation within Alberta (including Nose Hill Métis District 5 and Elbow Métis District 6).</p>
+          <p>The Cloud Security Alliance Calgary Region Chapter is situated on land Northwest of where the Bow River meets the Elbow River, a site traditionally known as Moh’kins’tsis to the Blackfoot, Wîchîspa to the Stoney Nakoda, and Guts’ists’i to the Tsuut’ina. On this land and in this place we strive to learn together, walk together, and grow together “in a good way.”</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</footer>
