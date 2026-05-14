@@ -3,6 +3,7 @@ backend:
   repo: csayyc/website
   branch: main
   base_url: https://website-j8h.pages.dev
+  auth_endpoint: auth
 
 media_folder: "static/images/uploads"
 public_folder: "/images/uploads"

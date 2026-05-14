@@ -12,7 +12,10 @@ export async function onRequest({ request, env }) {
   }
 
   const requestUrl = new URL(request.url);
-  const state = randomState();
+  // Decap CMS passes its own state param — honour it so the value round-trips
+  // back through GitHub unchanged. Fall back to a server-generated state if
+  // nothing is provided (e.g. direct navigation).
+  const state = requestUrl.searchParams.get("state") || randomState();
   const authorizeUrl = new URL(GITHUB_AUTHORIZE_URL);
 
   authorizeUrl.searchParams.set("client_id", env.GITHUB_CLIENT_ID);

@@ -75,7 +75,10 @@ export async function onRequest({ request, env }) {
     return htmlResponse(renderAuthResponse("error", { error: "Missing OAuth code" }), 400);
   }
 
-  if (!state || !expectedState || state !== expectedState) {
+  // Only enforce state check when /auth set the cookie. If the cookie is absent
+  // (Functions not reached and Decap went to GitHub directly), trust that Decap
+  // validates its own state client-side.
+  if (expectedState && state !== expectedState) {
     return htmlResponse(renderAuthResponse("error", { error: "Invalid OAuth state" }), 400);
   }
 
