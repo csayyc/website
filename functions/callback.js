@@ -19,16 +19,33 @@ function renderAuthResponse(status, content) {
   </head>
   <body>
     <script>
-      const receiveMessage = (message) => {
-        window.opener.postMessage(
-          'authorization:github:${status}:${payload}',
-          message.origin
-        );
-        window.removeEventListener("message", receiveMessage, false);
-      };
+      (function () {
+        var message = 'authorization:github:${status}:${payload}';
+        var sent = false;
 
-      window.addEventListener("message", receiveMessage, false);
-      window.opener.postMessage("authorizing:github", "*");
+        function sendToOpener(targetOrigin) {
+          if (sent) return;
+          sent = true;
+          window.removeEventListener("message", receiveMessage, false);
+          window.opener.postMessage(message, targetOrigin);
+        }
+
+        function receiveMessage(e) {
+          sendToOpener(e.origin);
+        }
+
+        if (window.opener) {
+          window.addEventListener("message", receiveMessage, false);
+          window.opener.postMessage("authorizing:github", "*");
+          // Fallback: Decap CMS ignores postMessages from the same origin, so if
+          // the handshake gets no response within 1s, send directly to any origin.
+          setTimeout(function () { sendToOpener("*"); }, 1000);
+        } else {
+          document.body.innerHTML =
+            "<p>Authentication error: this page must be opened as a popup. " +
+            "Please close this tab and try again from the CMS.</p>";
+        }
+      })();
     </script>
   </body>
 </html>`;
