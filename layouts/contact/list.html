@@ -86,6 +86,9 @@
             <textarea name="message" required rows="6" aria-invalid="false" aria-describedby="err-message" class="w-full min-w-0 rounded-2xl border border-slate-300 px-4 py-3 text-base font-normal text-charcoal outline-none transition focus:border-orange focus:ring-4 focus:ring-orange/15"></textarea>
             <p id="err-message" role="alert" class="hidden text-sm font-normal text-red-600"></p>
           </label>
+          <p id="membership-linkedin-hint" class="hidden -mt-2 text-sm font-normal text-csa-slate">
+            You can also <a href="{{ site.Params.linkedin }}" target="_blank" rel="noopener noreferrer" class="font-semibold text-orange hover:underline">join our LinkedIn group</a> to connect with the community right away.
+          </p>
           <div id="form-error" class="hidden rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700"></div>
           <button id="form-submit" class="btn-primary w-full sm:w-fit" type="submit">Send Inquiry</button>
         </form>
@@ -120,6 +123,31 @@
 
       const VALID_CLASSES = ['border-slate-300', 'focus:border-orange', 'focus:ring-orange/15'];
       const INVALID_CLASSES = ['border-red-400', 'focus:border-red-500', 'focus:ring-red-500/15'];
+
+      const inquirySelect = form.querySelector('[name="inquiry_type"]');
+      const messageArea = form.querySelector('[name="message"]');
+      const linkedinHint = document.getElementById('membership-linkedin-hint');
+      const MEMBERSHIP_PREFILL = "Hi, I'd like to join the CSA Calgary chapter as a member. Please let me know the next steps.";
+
+      function applyMembershipState() {
+        const isMembership = inquirySelect.value === 'New membership';
+        if (isMembership && !messageArea.value) messageArea.value = MEMBERSHIP_PREFILL;
+        linkedinHint.classList.toggle('hidden', !isMembership);
+      }
+
+      inquirySelect.addEventListener('change', function () {
+        applyMembershipState();
+        if (messageArea.getAttribute('aria-invalid') === 'true') validateField('message');
+      });
+
+      (function () {
+        const params = new URLSearchParams(window.location.search);
+        if (params.get('type') === 'membership') {
+          inquirySelect.value = 'New membership';
+          messageArea.value = MEMBERSHIP_PREFILL;
+          linkedinHint.classList.remove('hidden');
+        }
+      })();
 
       const validators = {
         name: v => v.trim() ? '' : 'Please enter your name.',
