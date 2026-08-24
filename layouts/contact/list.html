@@ -235,6 +235,16 @@
           const data = await res.json();
 
           if (data.success) {
+            if (inquirySelect.value === 'New membership') {
+              const name = form.querySelector('[name="name"]').value;
+              const email = form.querySelector('[name="email"]').value;
+              const botcheck = form.querySelector('[name="botcheck"]').checked;
+              fetch('/membership-notify', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ name, email, botcheck }),
+              }).catch(() => {});
+            }
             form.reset();
             Object.keys(validators).forEach(field => setFieldState(field, ''));
             fadeOut(form, () => {

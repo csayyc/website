@@ -63,6 +63,8 @@ Expected secrets/environment variables:
 - `CMS_ALLOWED_GITHUB_USERS` comma-separated GitHub usernames allowed to use Decap CMS
 - `HUGO_PARAMS_web3formsKey`
 - `HUGO_PARAMS_cloudflareAnalyticsToken`
+- `RESEND_API_KEY`
+- `MEMBERSHIP_FROM_EMAIL` (optional, defaults to `CSA Calgary <hello@csacalgary.org>`)
 
 ## CMS
 
@@ -80,3 +82,19 @@ CMS protection layers:
 - Decap uses GitHub sign-in against `csayyc/website`.
 - `publish_mode: editorial_workflow` keeps CMS changes in Decap's review workflow before publishing.
 - `functions/callback.js` requires `CMS_ALLOWED_GITHUB_USERS`; login fails closed if the variable is missing or the GitHub login is not listed.
+
+## Membership Acknowledgment Email
+
+When a visitor submits the contact form with "New membership" selected, the form (after Web3Forms accepts the submission) makes a best-effort call to `functions/membership-notify.js` at `/membership-notify`, which sends a personalized acknowledgment email via the Resend API using the submitted name and email. This is fire-and-forget from the browser — a failure here does not affect the visitor's Web3Forms submission or the success state they see.
+
+Requires `RESEND_API_KEY` (Cloudflare Pages secret). The sending domain must be verified in Resend; this does not require changing the mailbox provider's MX records.
+
+### Local Testing
+
+Pages Functions don't run under plain `hugo server` — use Wrangler's local emulator instead:
+
+1. Copy `.dev.vars.example` to `.dev.vars` and fill in a real `RESEND_API_KEY` (this file is gitignored and never committed).
+2. Run `npm run functions:dev`. This builds the site once and serves it from `public/` via `wrangler pages dev`, with `functions/` running locally — no Cloudflare account or deploy required.
+3. Visit the printed local URL (defaults to `http://127.0.0.1:8788`) and submit the contact form with "New membership" selected.
+
+This is local-only: it doesn't touch the Cloudflare Pages dashboard config, doesn't deploy anything, and `.dev.vars` never leaves your machine.

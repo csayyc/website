@@ -1,0 +1,10 @@
+node_modules/
+public/
+resources/
+.hugo_build.lock
+
+# Wrangler local dev (Pages Functions testing) — secrets, never commit
+.dev.vars
+.dev.vars.*
+!.dev.vars.example
+.wrangler/
