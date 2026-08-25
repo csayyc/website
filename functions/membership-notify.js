@@ -1,6 +1,8 @@
 const RESEND_URL = "https://api.resend.com/emails";
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const LINKEDIN_URL = "https://www.linkedin.com/groups/18361060/";
+const MEMBERSHIP_FROM = "CSA Calgary Membership <membership@csacalgary.org>";
+const MEMBERSHIP_REPLY_TO = "membership@csacalgary.org";
 
 function escapeHtml(value) {
   return String(value).replace(/[&<>"']/g, (char) => ({
@@ -72,7 +74,6 @@ export async function onRequestPost({ request, env }) {
     });
   }
 
-  const fromAddress = env.MEMBERSHIP_FROM_EMAIL || "CSA Calgary <hello@csacalgary.org>";
   const trimmedName = name.trim().slice(0, 200);
 
   const resendResponse = await fetch(RESEND_URL, {
@@ -82,9 +83,9 @@ export async function onRequestPost({ request, env }) {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      from: fromAddress,
+      from: MEMBERSHIP_FROM,
       to: [email.trim()],
-      reply_to: "hello@csacalgary.org",
+      reply_to: MEMBERSHIP_REPLY_TO,
       subject: `Welcome, ${trimmedName} — your CSA Calgary membership request`,
       html: renderEmailHtml(trimmedName),
     }),

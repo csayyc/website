@@ -64,7 +64,6 @@ Expected secrets/environment variables:
 - `HUGO_PARAMS_web3formsKey`
 - `HUGO_PARAMS_cloudflareAnalyticsToken`
 - `RESEND_API_KEY`
-- `MEMBERSHIP_FROM_EMAIL` (optional, defaults to `CSA Calgary <hello@csacalgary.org>`)
 
 ## CMS
 
@@ -88,6 +87,8 @@ CMS protection layers:
 When a visitor submits the contact form with "New membership" selected, the form (after Web3Forms accepts the submission) makes a best-effort call to `functions/membership-notify.js` at `/membership-notify`, which sends a personalized acknowledgment email via the Resend API using the submitted name and email. This is fire-and-forget from the browser — a failure here does not affect the visitor's Web3Forms submission or the success state they see.
 
 Requires `RESEND_API_KEY` (Cloudflare Pages secret). The sending domain must be verified in Resend; this does not require changing the mailbox provider's MX records.
+
+The email is sent from and replies to `membership@csacalgary.org` (hardcoded in `functions/membership-notify.js`), so intending members can reply directly into a mailbox monitored by the membership director. This mailbox must exist and be actively monitored — that's managed in the mailbox provider (PurelyMail), not this repo.
 
 ### Local Testing
 
