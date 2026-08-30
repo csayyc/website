@@ -43,6 +43,11 @@ summaryLength = 24
     parent = 'Get Involved'
     weight = 10
   [[menus.main]]
+    name = 'Membership'
+    pageRef = '/membership'
+    parent = 'Get Involved'
+    weight = 5
+  [[menus.main]]
     name = 'Volunteer'
     pageRef = '/get-involved/volunteer'
     parent = 'Get Involved'
