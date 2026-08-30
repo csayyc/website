@@ -1,23 +1,20 @@
 {{ define "main" }}
   <section class="overflow-hidden border-b border-slate-200 bg-offwhite">
-    <div class="container-premium grid gap-12 py-16 sm:py-24 lg:grid-cols-[0.88fr_1.12fr] lg:items-end">
+    <div class="container-premium grid gap-10 py-16 lg:grid-cols-[0.88fr_1.12fr] lg:items-center">
       <div>
         <p class="eyebrow">CSA Calgary membership</p>
-        <h1 class="mt-5 max-w-4xl text-4xl font-extrabold tracking-tight text-navy sm:text-6xl">Build your place in cloud security.</h1>
-        <p class="mt-6 max-w-2xl text-lg leading-8 text-csa-slate">Learn, connect, and contribute with Calgary’s cloud security community. Everyone interested in cloud security is welcome.</p>
-        <div class="mt-9 flex flex-wrap items-center gap-5">
+        <h1 class="mt-4 max-w-4xl text-4xl font-extrabold tracking-tight text-navy sm:text-5xl">Build your place in cloud security.</h1>
+        <p class="mt-5 max-w-2xl text-base leading-7 text-csa-slate sm:text-lg sm:leading-8">Learn, connect, and contribute with Calgary’s cloud security community. Everyone interested in cloud security is welcome.</p>
+        <div class="mt-8 flex flex-wrap items-center gap-5">
           <a href="{{ "/contact/?type=membership#contact-form" | relURL }}" class="btn-primary">Become a Member</a>
           <a href="{{ site.Params.linkedin }}" target="_blank" rel="noopener noreferrer" class="text-sm font-bold text-navy underline decoration-orange decoration-2 underline-offset-4 transition hover:text-orange">Meet the community on LinkedIn</a>
         </div>
       </div>
-      <div class="relative min-h-[320px] overflow-hidden bg-navy shadow-premium sm:min-h-[390px]">
+      <div class="relative min-h-[300px] overflow-hidden rounded-3xl bg-navy shadow-premium sm:min-h-[380px]">
         <img src="{{ "images/membership-community.png" | relURL }}" alt="Cloud security professionals in conversation at a community event" width="1536" height="1024" fetchpriority="high" decoding="async" class="absolute inset-0 h-full w-full object-cover">
         <div class="absolute inset-0 bg-gradient-to-t from-navy via-navy/15 to-transparent"></div>
-        <div class="absolute inset-x-0 bottom-0 p-6 sm:p-8">
-          <div class="max-w-sm border-l-2 border-orange pl-4 text-white">
-            <p class="text-xl font-extrabold leading-tight tracking-tight">A local chapter is the front door to a much wider conversation.</p>
-            <p class="mt-2 text-sm font-medium text-white/75">Make room for your perspective.</p>
-          </div>
+        <div class="absolute bottom-5 left-5 right-5">
+          <p class="inline-flex rounded-full bg-orange px-3 py-1 text-xs font-bold uppercase tracking-[0.18em] text-white shadow-[0_8px_20px_rgba(0,0,0,0.28)]">Join the Community</p>
         </div>
       </div>
     </div>
