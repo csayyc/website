@@ -21,53 +21,86 @@
       </div>
     </div>
   </section>
-  <section class="section">
+  <section class="bg-offwhite py-14 sm:py-20">
     <div class="container-premium">
-      <div class="mb-10 grid gap-6 md:grid-cols-3">
-        <div class="rounded-2xl bg-surface p-6">
-          <div class="mb-3 flex h-10 w-10 items-center justify-center rounded-xl bg-orange/10 text-orange">{{ partial "icon.html" (dict "name" "users" "class" "h-5 w-5") }}</div>
-          <h3 class="font-bold text-navy">Reach practitioners</h3>
-          <p class="mt-1 text-sm text-csa-slate">Connect your brand with local cloud security professionals at every event.</p>
+      <div class="grid gap-8 border-b border-slate-200 pb-10 lg:grid-cols-[0.8fr_1.2fr] lg:items-end">
+        <div>
+          <p class="eyebrow">Partnership options</p>
+          <h2 class="mt-3 max-w-md text-3xl font-bold tracking-tight text-navy sm:text-4xl">Support that fits your goals.</h2>
         </div>
-        <div class="rounded-2xl bg-surface p-6">
-          <div class="mb-3 flex h-10 w-10 items-center justify-center rounded-xl bg-orange/10 text-orange">{{ partial "icon.html" (dict "name" "mic" "class" "h-5 w-5") }}</div>
-          <h3 class="font-bold text-navy">Shape programming</h3>
-          <p class="mt-1 text-sm text-csa-slate">Speaking slots and content influence help position your team as subject-matter experts.</p>
-        </div>
-        <div class="rounded-2xl bg-surface p-6">
-          <div class="mb-3 flex h-10 w-10 items-center justify-center rounded-xl bg-orange/10 text-orange">{{ partial "icon.html" (dict "name" "globe" "class" "h-5 w-5") }}</div>
-          <h3 class="font-bold text-navy">Support the community</h3>
-          <p class="mt-1 text-sm text-csa-slate">Help make high-quality cloud security education accessible to everyone in Calgary.</p>
-        </div>
+        <article class="prose prose-slate max-w-2xl text-sm prose-p:my-0 prose-a:text-orange sm:text-base">{{ .Content }}</article>
       </div>
-      <article class="prose prose-slate max-w-none prose-a:text-orange sm:prose-lg">{{ .Content }}</article>
-      <div class="mt-10 grid gap-6 md:grid-cols-3">
-        {{ range hugo.Data.sponsors }}
-          {{ $isPlatinum := eq .tier "Platinum" }}
-          <article id="{{ .tier | anchorize }}" class="card relative flex flex-col scroll-mt-28 transition hover:-translate-y-1 hover:shadow-[0_28px_70px_-32px_rgba(30,76,115,0.35)] {{ if $isPlatinum }}border-orange/40 shadow-[0_28px_70px_-32px_rgba(242,125,66,0.3)]{{ end }}">
-            {{ if $isPlatinum }}
-              <span class="absolute right-4 top-4 rounded-full bg-orange px-3 py-0.5 text-xs font-bold uppercase tracking-[0.12em] text-white">Featured</span>
-            {{ end }}
-            <div class="mb-5 flex h-12 w-12 items-center justify-center rounded-2xl bg-orange/10 text-orange">
-              {{ if $isPlatinum }}
-                {{ partial "icon.html" (dict "name" "star" "class" "h-6 w-6") }}
-              {{ else }}
-                {{ partial "icon.html" (dict "name" "briefcase" "class" "h-6 w-6") }}
-              {{ end }}
+
+      <section class="mt-8 overflow-hidden border border-slate-200 bg-surface">
+        <div class="flex items-center gap-3 border-b border-slate-200 px-6 py-4 sm:px-8">
+          <span class="h-px w-8 bg-orange"></span>
+          <p class="text-[11px] font-bold uppercase tracking-[0.2em] text-navy">Partnership value</p>
+        </div>
+        <div class="grid md:grid-cols-3">
+          <div class="p-6 sm:p-8 md:border-r md:border-slate-200">
+            <div class="flex items-start gap-4">
+              <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-white text-orange shadow-sm">{{ partial "icon.html" (dict "name" "users" "class" "h-5 w-5") }}</span>
+              <div>
+                <h3 class="text-base font-bold text-navy">Reach the right audience</h3>
+                <p class="mt-2 text-sm leading-6 text-csa-slate">Build visibility with Calgary’s cloud security practitioners and decision-makers.</p>
+              </div>
             </div>
-            <p class="eyebrow">{{ .tier }}</p>
-            <h2 class="mt-3 text-2xl font-bold text-navy">{{ .name }}</h2>
-            <p class="mt-4 text-csa-slate">{{ .description }}</p>
-            {{ if .benefits }}
-              <ul class="mt-4 space-y-1.5 text-sm text-csa-slate">
-                {{ range .benefits }}
-                  <li class="flex items-start gap-2"><span class="mt-0.5 text-orange">✓</span>{{ . }}</li>
+          </div>
+          <div class="border-t border-slate-200 p-6 sm:p-8 md:border-r md:border-t-0">
+            <div class="flex items-start gap-4">
+              <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-white text-orange shadow-sm">{{ partial "icon.html" (dict "name" "mic" "class" "h-5 w-5") }}</span>
+              <div>
+                <h3 class="text-base font-bold text-navy">Support trusted programming</h3>
+                <p class="mt-2 text-sm leading-6 text-csa-slate">Help deliver expert-led sessions, workshops, and meaningful local discussion.</p>
+              </div>
+            </div>
+          </div>
+          <div class="border-t border-slate-200 p-6 sm:p-8 md:border-t-0">
+            <div class="flex items-start gap-4">
+              <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-white text-orange shadow-sm">{{ partial "icon.html" (dict "name" "globe" "class" "h-5 w-5") }}</span>
+              <div>
+                <h3 class="text-base font-bold text-navy">Strengthen the community</h3>
+                <p class="mt-2 text-sm leading-6 text-csa-slate">Make practical cloud security education more accessible across Calgary.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div class="mt-6 overflow-hidden border border-slate-200 bg-white shadow-premium">
+        {{ range $index, $sponsor := hugo.Data.sponsors }}
+          {{ $isPlatinum := eq $sponsor.tier "Platinum" }}
+          <article id="{{ $sponsor.tier | anchorize }}" class="group grid scroll-mt-28 gap-5 border-b border-slate-200 p-6 last:border-b-0 hover:bg-surface/60 sm:p-8 lg:grid-cols-[4.5rem_minmax(15rem,0.8fr)_1.2fr_auto] lg:items-center lg:gap-8 {{ if $isPlatinum }}bg-orange/[0.06]{{ end }}">
+            <div class="flex items-center gap-3 lg:block">
+              <span class="text-3xl font-bold tracking-tight text-orange">0{{ add $index 1 }}</span>
+              <span class="h-px flex-1 bg-orange/30 lg:mt-3 lg:block lg:w-10"></span>
+            </div>
+            <div>
+              <p class="text-[11px] font-bold uppercase tracking-[0.2em] text-orange">{{ $sponsor.tier }}</p>
+              <h2 class="mt-2 text-xl font-bold tracking-tight text-navy">{{ $sponsor.name }}</h2>
+              <p class="mt-2 text-sm leading-6 text-csa-slate">{{ $sponsor.description }}</p>
+            </div>
+            {{ with $sponsor.benefits }}
+              <ul class="grid gap-x-5 gap-y-2 text-sm leading-5 text-csa-slate sm:grid-cols-2">
+                {{ range . }}
+                  <li class="flex gap-2"><span class="font-bold text-orange">—</span><span>{{ . }}</span></li>
                 {{ end }}
               </ul>
             {{ end }}
-            <a href="{{ .url }}" class="mt-auto pt-6 inline-flex text-sm font-bold text-orange">Discuss Sponsorship →</a>
+            <a href="{{ $sponsor.url | relURL }}" class="inline-flex items-center gap-2 text-sm font-bold text-navy transition hover:text-orange focus:outline-none focus:ring-4 focus:ring-orange/20 lg:justify-self-end">
+              Discuss
+              <span class="flex h-9 w-9 items-center justify-center rounded-full border border-navy/15 text-orange transition group-hover:border-orange group-hover:bg-orange group-hover:text-white">{{ partial "icon.html" (dict "name" "arrow" "class" "h-4 w-4") }}</span>
+            </a>
           </article>
         {{ end }}
+      </div>
+
+      <div class="mt-8 flex flex-col justify-between gap-5 border-l-4 border-orange bg-navy px-6 py-6 text-white sm:flex-row sm:items-center sm:px-8">
+        <div>
+          <p class="text-lg font-bold">Ready to partner with CSA Calgary?</p>
+          <p class="mt-1 text-sm text-white/70">We’ll help you find the right fit.</p>
+        </div>
+        <a href="{{ "/contact/?type=sponsorship#contact-form" | relURL }}" class="btn-primary shrink-0">Contact us</a>
       </div>
     </div>
   </section>
