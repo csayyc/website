@@ -241,7 +241,10 @@
               const botcheck = form.querySelector('[name="botcheck"]').checked;
               fetch('/membership-notify', {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
+                headers: {
+                  'Content-Type': 'application/json',
+                  'X-Membership-Secret': '{{ site.Params.membershipNotifySecret }}',
+                },
                 body: JSON.stringify({ name, email, botcheck }),
               }).catch(() => {});
             }

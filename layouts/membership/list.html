@@ -1,0 +1,81 @@
+{{ define "main" }}
+  <section class="overflow-hidden border-b border-slate-200 bg-offwhite">
+    <div class="container-premium grid gap-10 py-16 lg:grid-cols-[0.88fr_1.12fr] lg:items-center">
+      <div>
+        <p class="eyebrow">CSA Calgary membership</p>
+        <h1 class="mt-4 max-w-4xl text-4xl font-extrabold tracking-tight text-navy sm:text-5xl">Build your place in cloud security.</h1>
+        <p class="mt-5 max-w-2xl text-base leading-7 text-csa-slate sm:text-lg sm:leading-8">Learn, connect, and contribute with Calgary’s cloud security community. Everyone interested in cloud security is welcome.</p>
+        <div class="mt-8 flex flex-wrap items-center gap-5">
+          <a href="{{ "/contact/?type=membership#contact-form" | relURL }}" class="btn-primary">Become a Member</a>
+          <a href="{{ site.Params.linkedin }}" target="_blank" rel="noopener noreferrer" class="text-sm font-bold text-navy underline decoration-orange decoration-2 underline-offset-4 transition hover:text-orange">Meet the community on LinkedIn</a>
+        </div>
+      </div>
+      <div class="relative min-h-[300px] overflow-hidden rounded-3xl bg-navy shadow-premium sm:min-h-[380px]">
+        <img src="{{ "images/membership-community.png" | relURL }}" alt="Cloud security professionals in conversation at a community event" width="1536" height="1024" fetchpriority="high" decoding="async" class="absolute inset-0 h-full w-full object-cover">
+        <div class="absolute inset-0 bg-gradient-to-t from-navy via-navy/15 to-transparent"></div>
+        <div class="absolute bottom-5 left-5 right-5">
+          <p class="inline-flex rounded-full bg-orange px-3 py-1 text-xs font-bold uppercase tracking-[0.18em] text-white shadow-[0_8px_20px_rgba(0,0,0,0.28)]">Join the Community</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section bg-white">
+    <div class="container-premium grid gap-12 lg:grid-cols-[0.72fr_1.28fr]">
+      <div>
+        <p class="eyebrow">Global perspective, local momentum</p>
+        <h2 class="mt-4 text-3xl font-extrabold tracking-tight text-navy sm:text-4xl">Knowledge is everywhere. Context is closer to home.</h2>
+      </div>
+      <div class="max-w-3xl text-base leading-7 text-csa-slate sm:text-lg sm:leading-8">
+        <p>CSA brings together people who advance cloud security through research, education, events, and community. Calgary is where that bigger conversation becomes personal, with local meetups and events that make it easier to find your people.</p>
+        <p class="mt-5">You might arrive with a problem to untangle, a new idea to test, or simple curiosity. You may leave having met a peer who challenges an assumption, opens a door, or changes what you do next.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="border-y border-slate-200 bg-surface">
+    <div class="container-premium py-16 sm:py-20">
+      <p class="eyebrow">How membership works</p>
+      <div class="mt-8 grid divide-y divide-slate-200 border-y border-slate-200 md:grid-cols-3 md:divide-x md:divide-y-0">
+        {{ range slice (dict "number" "01" "title" "Become a member" "copy" "Complete the form and let us know you would like to be part of the chapter.") (dict "number" "02" "title" "Show up" "copy" "Join a local meetup or chapter event. Come with a question, an idea, or simply the wish to listen in.") (dict "number" "03" "title" "Build your network" "copy" "Keep the conversation going. The right introduction can become a new perspective, a collaborator, or a career-changing opportunity.") }}
+          <article class="px-0 py-7 md:px-7 md:py-2 first:md:pl-0 last:md:pr-0">
+            <p class="text-xs font-extrabold tracking-[0.2em] text-orange">{{ .number }}</p>
+            <h3 class="mt-5 text-xl font-extrabold text-navy">{{ .title }}</h3>
+            <p class="mt-3 leading-7 text-csa-slate">{{ .copy }}</p>
+          </article>
+        {{ end }}
+      </div>
+    </div>
+  </section>
+
+  <section class="section bg-white">
+    <div class="container-premium grid gap-10 lg:grid-cols-[1fr_0.86fr] lg:items-center">
+      <div>
+        <p class="eyebrow">An open invitation</p>
+        <h2 class="mt-4 max-w-2xl text-3xl font-extrabold tracking-tight text-navy sm:text-4xl">There is no single kind of member.</h2>
+        <p class="mt-5 max-w-2xl text-base leading-7 text-csa-slate sm:text-lg">Membership is for people working in and around cloud security: technical practitioners, architects, executives, consultants, governance and risk professionals, researchers, students, and those finding their way into the field.</p>
+      </div>
+      <div class="flex flex-wrap gap-2.5 lg:justify-end">
+        {{ range slice "Builders" "Defenders" "Leaders" "Advisors" "Researchers" "Students" "Career changers" }}
+          <span class="rounded-full border border-slate-200 px-4 py-2.5 text-sm font-bold text-navy">{{ . }}</span>
+        {{ end }}
+      </div>
+    </div>
+    <div class="container-premium mt-8">
+      <p class="border-l-2 border-orange pl-4 text-sm leading-6 text-csa-slate">Interested in helping make the chapter happen? <a href="{{ "/get-involved/volunteer/" | relURL }}" class="font-bold text-navy underline decoration-orange decoration-2 underline-offset-4 transition hover:text-orange">See volunteer opportunities</a>.</p>
+    </div>
+  </section>
+
+  <section class="bg-navy py-16 text-white sm:py-20">
+    <div class="container-premium grid gap-8 lg:grid-cols-[1.2fr_0.8fr] lg:items-center">
+      <div>
+        <p class="eyebrow">Your seat is here</p>
+        <h2 class="mt-4 max-w-2xl text-3xl font-extrabold tracking-tight sm:text-4xl">Come for the conversation. Stay for what it changes.</h2>
+        <p class="mt-5 max-w-xl text-white/75">Join the chapter, come to a meetup, and see where a good conversation can take you.</p>
+      </div>
+      <div class="lg:text-right">
+        <a href="{{ "/contact/?type=membership#contact-form" | relURL }}" class="btn-primary">Become a Member</a>
+      </div>
+    </div>
+  </section>
+{{ end }}

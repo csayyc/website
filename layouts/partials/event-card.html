@@ -3,7 +3,7 @@
     {{ with .Params.event_type }}<span class="event-card-type">{{ . }}</span>{{ end }}
     <p class="event-card-date">
       {{ partial "icon.html" (dict "name" "calendar" "class" "h-3.5 w-3.5 opacity-70") }}
-      {{ .Date.Format "Jan 2, 2006" }}
+      {{ with .Params.date_label }}{{ . }}{{ else }}{{ .Date.Format "Jan 2, 2006" }}{{ end }}
     </p>
   </div>
   <div class="event-card-body">

@@ -1,1 +1,2 @@
 RESEND_API_KEY=your_resend_api_key_here
+MEMBERSHIP_NOTIFY_SECRET=your_membership_notify_secret_here
