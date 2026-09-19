@@ -8,6 +8,8 @@ const FALLBACK_TO = "hello@csacalgary.org";
 const MAX_NAME = 200;
 const MAX_EMAIL = 254;
 const MAX_ORGANIZATION = 200;
+const MAX_PROFESSIONAL_LEVEL = 100;
+const MAX_TALK_TITLE = 300;
 const MAX_MESSAGE = 5000;
 
 // Routing table — server-side only. The browser sends a topic slug, never an address.
@@ -144,14 +146,22 @@ async function sendEmail(apiKey, payload) {
   }
 }
 
-function renderTeamEmailHtml({ label, name, email, organization, message, timestamp, inquiryId }) {
+function renderTeamEmailHtml({ label, name, email, organization, professionalLevel, talkTitle, message, timestamp, inquiryId }) {
   const safeLabel = escapeHtml(label);
   const safeName = escapeHtml(name);
   const safeEmail = escapeHtml(email);
   const safeOrganization = escapeHtml(organization);
+  const safeProfessionalLevel = escapeHtml(professionalLevel);
+  const safeTalkTitle = escapeHtml(talkTitle);
   const safeMessage = escapeHtml(message).replace(/\n/g, "<br>");
   const organizationRow = safeOrganization
     ? `<tr><td style="padding:4px 16px 4px 0;font-size:13px;font-weight:700;color:#475569;vertical-align:top;">Organization</td><td style="padding:4px 0;font-size:14px;color:#1f2937;">${safeOrganization}</td></tr>`
+    : "";
+  const professionalLevelRow = safeProfessionalLevel
+    ? `<tr><td style="padding:4px 16px 4px 0;font-size:13px;font-weight:700;color:#475569;vertical-align:top;">Professional level</td><td style="padding:4px 0;font-size:14px;color:#1f2937;">${safeProfessionalLevel}</td></tr>`
+    : "";
+  const talkTitleRow = safeTalkTitle
+    ? `<tr><td style="padding:4px 16px 4px 0;font-size:13px;font-weight:700;color:#475569;vertical-align:top;">Proposed talk title</td><td style="padding:4px 0;font-size:14px;color:#1f2937;">${safeTalkTitle}</td></tr>`
     : "";
   return `<!doctype html>
 <html>
@@ -164,6 +174,8 @@ function renderTeamEmailHtml({ label, name, email, organization, message, timest
         <tr><td style="padding:4px 16px 4px 0;font-size:13px;font-weight:700;color:#475569;vertical-align:top;">Name</td><td style="padding:4px 0;font-size:14px;color:#1f2937;">${safeName}</td></tr>
         <tr><td style="padding:4px 16px 4px 0;font-size:13px;font-weight:700;color:#475569;vertical-align:top;">Email</td><td style="padding:4px 0;font-size:14px;color:#1f2937;">${safeEmail}</td></tr>
         ${organizationRow}
+        ${professionalLevelRow}
+        ${talkTitleRow}
         <tr><td style="padding:4px 16px 4px 0;font-size:13px;font-weight:700;color:#475569;vertical-align:top;">Sent at</td><td style="padding:4px 0;font-size:14px;color:#1f2937;">${timestamp}</td></tr>
         <tr><td style="padding:4px 16px 4px 0;font-size:13px;font-weight:700;color:#475569;vertical-align:top;">Inquiry ID</td><td style="padding:4px 0;font-size:14px;color:#1f2937;">${inquiryId}</td></tr>
       </table>
@@ -175,14 +187,16 @@ function renderTeamEmailHtml({ label, name, email, organization, message, timest
 </html>`;
 }
 
-function renderTeamEmailText({ label, name, email, organization, message, timestamp, inquiryId }) {
+function renderTeamEmailText({ label, name, email, organization, professionalLevel, talkTitle, message, timestamp, inquiryId }) {
   const organizationLine = organization ? `Organization: ${organization}\n` : "";
+  const professionalLevelLine = professionalLevel ? `Professional level: ${professionalLevel}\n` : "";
+  const talkTitleLine = talkTitle ? `Proposed talk title: ${talkTitle}\n` : "";
   return `New ${label} inquiry via the CSA Calgary website
 
 Topic: ${label}
 Name: ${name}
 Email: ${email}
-${organizationLine}Sent at: ${timestamp}
+${organizationLine}${professionalLevelLine}${talkTitleLine}Sent at: ${timestamp}
 Inquiry ID: ${inquiryId}
 
 Message:
@@ -245,7 +259,7 @@ export async function onRequestPost({ request, env }) {
     return jsonResponse(400, { error: "Invalid request body" });
   }
 
-  const { topic, name, email, organization, message, botcheck, turnstileToken } = body || {};
+  const { topic, name, email, organization, professionalLevel, talkTitle, message, botcheck, turnstileToken } = body || {};
 
   // Honeypot: treat a filled field as a successful no-op and send nothing.
   if (botcheck) {
@@ -266,6 +280,8 @@ export async function onRequestPost({ request, env }) {
     return jsonResponse(403, { error: "Verification failed" });
   }
 
+  const topicSlug = typeof topic === "string" ? topic.trim().toLowerCase() : "";
+
   if (typeof name !== "string" || !name.trim()) {
     return jsonResponse(400, { error: "Name is required" });
   }
@@ -275,12 +291,20 @@ export async function onRequestPost({ request, env }) {
   if (typeof message !== "string" || !message.trim()) {
     return jsonResponse(400, { error: "Message is required" });
   }
+  if (topicSlug === "sponsorship" && (typeof organization !== "string" || !organization.trim())) {
+    return jsonResponse(400, { error: "Organization is required for sponsorship inquiries" });
+  }
 
   const trimmedName = name.trim().slice(0, MAX_NAME);
   const trimmedEmail = email.trim().slice(0, MAX_EMAIL);
   const trimmedOrganization = typeof organization === "string" ? organization.trim().slice(0, MAX_ORGANIZATION) : "";
   const trimmedMessage = message.trim().slice(0, MAX_MESSAGE);
-  const topicSlug = typeof topic === "string" ? topic.trim().toLowerCase() : "";
+  const trimmedProfessionalLevel = topicSlug === "membership" && typeof professionalLevel === "string"
+    ? professionalLevel.trim().slice(0, MAX_PROFESSIONAL_LEVEL)
+    : "";
+  const trimmedTalkTitle = topicSlug === "speaking" && typeof talkTitle === "string"
+    ? talkTitle.trim().slice(0, MAX_TALK_TITLE)
+    : "";
 
   const entry = TOPICS[topicSlug] || TOPICS.general;
   const generalTo = env.CONTACT_GENERAL_TO || FALLBACK_TO;
@@ -297,6 +321,8 @@ export async function onRequestPost({ request, env }) {
     name: trimmedName,
     email: trimmedEmail,
     organization: trimmedOrganization,
+    professionalLevel: trimmedProfessionalLevel,
+    talkTitle: trimmedTalkTitle,
     message: trimmedMessage,
     timestamp,
     inquiryId,

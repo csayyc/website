@@ -4,4 +4,4 @@ description: "Support practical cloud security education and professional develo
 layout: "sponsors"
 ---
 
-Partner with CSA Calgary to support accessible, high-quality cloud security programming.
+Put your organization behind practical learning, local connection, and the people doing the work.
