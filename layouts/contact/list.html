@@ -1,19 +1,82 @@
 {{ define "main" }}
   <section class="bg-navy text-white">
-    <div class="container-premium py-16">
+    <div class="container-premium py-10 sm:py-12">
       <p class="eyebrow">Contact</p>
-      <h1 class="mt-4 text-4xl font-extrabold tracking-tight sm:text-5xl">{{ .Title }}</h1>
-      <p class="mt-5 max-w-2xl text-base leading-7 text-white/75 sm:text-lg">{{ .Params.description }}</p>
+      <h1 class="mt-3 text-3xl font-extrabold tracking-tight sm:text-4xl">{{ .Title }}</h1>
+      <p class="mt-3 max-w-2xl text-sm leading-6 text-white/75 sm:text-base sm:leading-7">{{ .Params.description }}</p>
     </div>
   </section>
   <section class="section overflow-x-clip">
     <div class="container-premium grid min-w-0 gap-8 lg:grid-cols-[0.85fr_1.15fr]">
-      <div class="min-w-0 space-y-8">
-        <div class="min-w-0">
-          <p class="eyebrow">How We Can Help</p>
-          <h2 class="mt-3 text-2xl font-extrabold tracking-tight text-navy sm:text-3xl">We'd love to hear from you.</h2>
-          <p class="mt-4 leading-7 text-csa-slate">Whether you're looking to get involved, explore a partnership, or simply learn more, fill out the form and we'll respond promptly.</p>
+      <div class="w-full min-w-0 max-w-full lg:order-2">
+        <div class="mb-5 min-w-0">
+          <h2 class="text-2xl font-extrabold tracking-tight text-navy sm:text-3xl">How can we help?</h2>
+          <p class="mt-2 leading-7 text-csa-slate">Choose a topic and we'll send your message to the right volunteer team.</p>
         </div>
+        <div id="contact-form" class="w-full min-w-0 max-w-full scroll-mt-28 overflow-hidden rounded-2xl border border-slate-200 bg-white p-4 shadow-premium sm:rounded-3xl sm:p-6">
+          <form id="inquiry-form" action="/contact-submit" method="POST" novalidate class="grid w-full min-w-0 gap-5">
+            <input type="checkbox" name="botcheck" class="hidden" aria-hidden="true" style="display:none">
+            <label class="grid min-w-0 gap-2 text-sm font-bold text-navy">
+              Topic
+              <select name="topic" required aria-invalid="false" aria-describedby="err-topic" class="w-full min-w-0 rounded-2xl border border-slate-300 bg-white px-4 py-3 text-base font-normal text-charcoal outline-none transition focus:border-orange focus:ring-4 focus:ring-orange/15">
+                <option value="">Select a topic</option>
+                <option value="membership">Join the chapter</option>
+                <option value="sponsorship">Sponsor or partner with us</option>
+                <option value="speaking">Propose a talk or program</option>
+                <option value="volunteer">Volunteer with us</option>
+                <option value="events">Ask about an event</option>
+                <option value="general">Something else</option>
+              </select>
+              <p id="err-topic" role="alert" class="hidden text-sm font-normal text-red-600"></p>
+            </label>
+            <label class="grid min-w-0 gap-2 text-sm font-bold text-navy">
+              Name
+              <input name="name" required autocomplete="name" aria-invalid="false" aria-describedby="err-name" class="w-full min-w-0 rounded-2xl border border-slate-300 px-4 py-3 text-base font-normal text-charcoal outline-none transition focus:border-orange focus:ring-4 focus:ring-orange/15">
+              <p id="err-name" role="alert" class="hidden text-sm font-normal text-red-600"></p>
+            </label>
+            <label class="grid min-w-0 gap-2 text-sm font-bold text-navy">
+              Email
+              <input type="email" name="email" required autocomplete="email" aria-invalid="false" aria-describedby="err-email" class="w-full min-w-0 rounded-2xl border border-slate-300 px-4 py-3 text-base font-normal text-charcoal outline-none transition focus:border-orange focus:ring-4 focus:ring-orange/15">
+              <p id="err-email" role="alert" class="hidden text-sm font-normal text-red-600"></p>
+            </label>
+            <label class="grid min-w-0 gap-2 text-sm font-bold text-navy">
+              Organization <span class="font-medium text-csa-slate">(optional)</span>
+              <input name="organization" autocomplete="organization" class="w-full min-w-0 rounded-2xl border border-slate-300 px-4 py-3 text-base font-normal text-charcoal outline-none transition focus:border-orange focus:ring-4 focus:ring-orange/15">
+            </label>
+            <label class="grid min-w-0 gap-2 text-sm font-bold text-navy">
+              Message
+              <textarea name="message" required rows="6" aria-invalid="false" aria-describedby="err-message" class="w-full min-w-0 rounded-2xl border border-slate-300 px-4 py-3 text-base font-normal text-charcoal outline-none transition focus:border-orange focus:ring-4 focus:ring-orange/15"></textarea>
+              <p id="err-message" role="alert" class="hidden text-sm font-normal text-red-600"></p>
+            </label>
+            <p id="membership-linkedin-hint" class="hidden -mt-2 text-sm font-normal text-csa-slate">
+              You can also <a href="{{ site.Params.linkedin }}" target="_blank" rel="noopener noreferrer" class="font-semibold text-orange hover:underline">join our LinkedIn group</a> to connect with the community right away.
+            </p>
+            {{ with site.Params.turnstileSiteKey }}
+              <div class="cf-turnstile" data-sitekey="{{ . }}"></div>
+            {{ end }}
+            <div id="form-error" class="hidden rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700"></div>
+            <button id="form-submit" class="btn-primary w-full sm:w-fit" type="submit">Send Inquiry</button>
+          </form>
+
+          <div id="form-success" class="hidden mx-auto w-full max-w-[17rem] px-0 py-2 text-center opacity-0 transition-opacity duration-500 sm:max-w-md sm:px-4 sm:py-6">
+            <div class="mx-auto mb-2 flex h-9 w-9 items-center justify-center rounded-full bg-orange/10 text-orange sm:mb-5 sm:h-12 sm:w-12">
+              <svg class="h-4 w-4 sm:h-5 sm:w-5" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg>
+            </div>
+            <p class="text-xs font-bold uppercase tracking-[0.08em] text-orange sm:text-sm sm:tracking-[0.22em]">Message Received</p>
+            <h2 class="mx-auto mt-2 max-w-[14.5rem] text-xl font-extrabold leading-tight text-navy sm:mt-3 sm:max-w-none sm:text-2xl">Thank you for reaching out.</h2>
+            <p id="form-success-message" class="mx-auto mt-2 max-w-[15.5rem] text-sm leading-6 text-csa-slate sm:mt-3 sm:max-w-sm sm:text-base sm:leading-6">Thanks for reaching out. We'll review your message and be in touch.</p>
+            <div class="mx-auto mt-4 flex w-full max-w-[13rem] flex-col items-stretch justify-center gap-2.5 sm:mt-8 sm:max-w-none sm:flex-row sm:flex-wrap sm:items-center sm:gap-4">
+              <a href="{{ "/events/" | relURL }}" class="inline-flex w-full min-w-0 items-center justify-center rounded-full bg-orange px-3 py-2 text-center text-xs font-bold leading-5 text-white shadow-premium transition hover:-translate-y-0.5 hover:bg-[#d9642d] focus:outline-none focus:ring-4 focus:ring-orange/25 sm:w-auto sm:px-6 sm:py-3 sm:text-sm">
+                <span class="sm:hidden">Upcoming Events</span>
+                <span class="hidden sm:inline">View Upcoming Events</span>
+              </a>
+              <button id="form-reset" class="text-xs font-semibold text-orange hover:underline sm:text-sm">Submit another inquiry</button>
+            </div>
+          </div>
+        </div>
+        <p class="mt-4 text-center text-sm text-csa-slate">Prefer email? Write to <a href="mailto:{{ site.Params.email }}" class="font-semibold text-orange hover:underline">{{ site.Params.email }}</a>.</p>
+      </div>
+      <div class="min-w-0 lg:order-1">
         <div class="grid min-w-0 gap-4">
           <div class="flex min-w-0 items-start gap-4">
             <div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-orange/10 text-orange">{{ partial "icon.html" (dict "name" "users" "class" "h-5 w-5") }}</div>
@@ -44,78 +107,18 @@
             </div>
           </div>
         </div>
-        <div class="min-w-0 rounded-2xl border border-slate-200 bg-surface p-5">
-          <p class="text-sm font-bold text-navy">Prefer to email directly?</p>
-          <a href="mailto:{{ site.Params.email }}" class="mt-2 block break-words text-sm font-semibold text-orange hover:underline">{{ site.Params.email }}</a>
-          <p class="mt-3 text-xs leading-5 text-csa-slate">We strive to address all inquiries promptly and look forward to connecting with you soon.</p>
-        </div>
-      </div>
-      <div id="contact-form" class="w-full min-w-0 max-w-full scroll-mt-28 overflow-hidden rounded-2xl border border-slate-200 bg-white p-4 shadow-premium sm:rounded-3xl sm:p-6">
-        <form id="inquiry-form" action="https://api.web3forms.com/submit" method="POST" novalidate class="grid w-full min-w-0 gap-5">
-          <input type="hidden" name="access_key" value="{{ site.Params.web3formsKey }}">
-          <input type="hidden" name="subject" value="New Inquiry: CSA Calgary Chapter">
-          <input type="hidden" name="from_name" value="CSA Calgary Website">
-          <input type="checkbox" name="botcheck" class="hidden" aria-hidden="true" style="display:none">
-          <label class="grid min-w-0 gap-2 text-sm font-bold text-navy">
-            Name
-            <input name="name" required autocomplete="name" aria-invalid="false" aria-describedby="err-name" class="w-full min-w-0 rounded-2xl border border-slate-300 px-4 py-3 text-base font-normal text-charcoal outline-none transition focus:border-orange focus:ring-4 focus:ring-orange/15">
-            <p id="err-name" role="alert" class="hidden text-sm font-normal text-red-600"></p>
-          </label>
-          <label class="grid min-w-0 gap-2 text-sm font-bold text-navy">
-            Email
-            <input type="email" name="email" required autocomplete="email" aria-invalid="false" aria-describedby="err-email" class="w-full min-w-0 rounded-2xl border border-slate-300 px-4 py-3 text-base font-normal text-charcoal outline-none transition focus:border-orange focus:ring-4 focus:ring-orange/15">
-            <p id="err-email" role="alert" class="hidden text-sm font-normal text-red-600"></p>
-          </label>
-          <label class="grid min-w-0 gap-2 text-sm font-bold text-navy">
-            Inquiry Type
-            <select name="inquiry_type" required aria-invalid="false" aria-describedby="err-inquiry_type" class="w-full min-w-0 rounded-2xl border border-slate-300 bg-white px-4 py-3 text-base font-normal text-charcoal outline-none transition focus:border-orange focus:ring-4 focus:ring-orange/15">
-              <option value="">Select an option</option>
-              <option value="New membership">New membership</option>
-              <option value="Sponsorship">Sponsorship</option>
-              <option value="Volunteering">Volunteering</option>
-              <option value="Speaking at an event">Speaking at an event</option>
-            </select>
-            <p id="err-inquiry_type" role="alert" class="hidden text-sm font-normal text-red-600"></p>
-          </label>
-          <label class="grid min-w-0 gap-2 text-sm font-bold text-navy">
-            Organization <span class="font-medium text-csa-slate">(optional)</span>
-            <input name="organization" autocomplete="organization" class="w-full min-w-0 rounded-2xl border border-slate-300 px-4 py-3 text-base font-normal text-charcoal outline-none transition focus:border-orange focus:ring-4 focus:ring-orange/15">
-          </label>
-          <label class="grid min-w-0 gap-2 text-sm font-bold text-navy">
-            Message
-            <textarea name="message" required rows="6" aria-invalid="false" aria-describedby="err-message" class="w-full min-w-0 rounded-2xl border border-slate-300 px-4 py-3 text-base font-normal text-charcoal outline-none transition focus:border-orange focus:ring-4 focus:ring-orange/15"></textarea>
-            <p id="err-message" role="alert" class="hidden text-sm font-normal text-red-600"></p>
-          </label>
-          <p id="membership-linkedin-hint" class="hidden -mt-2 text-sm font-normal text-csa-slate">
-            You can also <a href="{{ site.Params.linkedin }}" target="_blank" rel="noopener noreferrer" class="font-semibold text-orange hover:underline">join our LinkedIn group</a> to connect with the community right away.
-          </p>
-          <div id="form-error" class="hidden rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700"></div>
-          <button id="form-submit" class="btn-primary w-full sm:w-fit" type="submit">Send Inquiry</button>
-        </form>
-
-        <div id="form-success" class="hidden mx-auto w-full max-w-[17rem] px-0 py-2 text-center opacity-0 transition-opacity duration-500 sm:max-w-md sm:px-4 sm:py-6">
-          <div class="mx-auto mb-2 flex h-9 w-9 items-center justify-center rounded-full bg-orange/10 text-orange sm:mb-5 sm:h-12 sm:w-12">
-            <svg class="h-4 w-4 sm:h-5 sm:w-5" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg>
-          </div>
-          <p class="text-xs font-bold uppercase tracking-[0.08em] text-orange sm:text-sm sm:tracking-[0.22em]">Message Received</p>
-          <h2 class="mx-auto mt-2 max-w-[14.5rem] text-xl font-extrabold leading-tight text-navy sm:mt-3 sm:max-w-none sm:text-2xl">Thank you for reaching out.</h2>
-          <p class="mx-auto mt-2 max-w-[15.5rem] text-sm leading-6 text-csa-slate sm:mt-3 sm:max-w-sm sm:text-base sm:leading-6">We'll review your inquiry and be in touch shortly.</p>
-          <div class="mx-auto mt-4 flex w-full max-w-[13rem] flex-col items-stretch justify-center gap-2.5 sm:mt-8 sm:max-w-none sm:flex-row sm:flex-wrap sm:items-center sm:gap-4">
-            <a href="{{ "/events/" | relURL }}" class="inline-flex w-full min-w-0 items-center justify-center rounded-full bg-orange px-3 py-2 text-center text-xs font-bold leading-5 text-white shadow-premium transition hover:-translate-y-0.5 hover:bg-[#d9642d] focus:outline-none focus:ring-4 focus:ring-orange/25 sm:w-auto sm:px-6 sm:py-3 sm:text-sm">
-              <span class="sm:hidden">Upcoming Events</span>
-              <span class="hidden sm:inline">View Upcoming Events</span>
-            </a>
-            <button id="form-reset" class="text-xs font-semibold text-orange hover:underline sm:text-sm">Submit another inquiry</button>
-          </div>
-        </div>
       </div>
     </div>
   </section>
 
+  {{ with site.Params.turnstileSiteKey }}
+    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+  {{ end }}
   <script>
     (function () {
       const form = document.getElementById('inquiry-form');
       const success = document.getElementById('form-success');
+      const successMessage = document.getElementById('form-success-message');
       const error = document.getElementById('form-error');
       const btn = document.getElementById('form-submit');
       const resetBtn = document.getElementById('form-reset');
@@ -124,32 +127,50 @@
       const VALID_CLASSES = ['border-slate-300', 'focus:border-orange', 'focus:ring-orange/15'];
       const INVALID_CLASSES = ['border-red-400', 'focus:border-red-500', 'focus:ring-red-500/15'];
 
-      const inquirySelect = form.querySelector('[name="inquiry_type"]');
+      const topicSelect = form.querySelector('[name="topic"]');
       const messageArea = form.querySelector('[name="message"]');
       const linkedinHint = document.getElementById('membership-linkedin-hint');
-      const MEMBERSHIP_PREFILL = "Hi, I'd like to join the CSA Calgary chapter as a member. Please let me know the next steps.";
 
-      function applyMembershipState() {
-        const isMembership = inquirySelect.value === 'New membership';
-        if (isMembership && !messageArea.value) messageArea.value = MEMBERSHIP_PREFILL;
-        linkedinHint.classList.toggle('hidden', !isMembership);
+      const DEFAULT_MESSAGE_PLACEHOLDER = 'How can we help?';
+      const MESSAGE_PLACEHOLDERS = {
+        membership: "Tell us a little about yourself and your interest in joining the chapter.",
+        sponsorship: "Tell us about your organization and how you'd like to partner with us.",
+        speaking: "Tell us about the talk or program you'd like to propose.",
+        volunteer: "Tell us how you'd like to help — events, content, communications, logistics, or something else.",
+        events: "Let us know which event your question is about.",
+        general: "How can we help?",
+      };
+      const SUCCESS_MESSAGES = {
+        membership: "Thanks for your interest in joining the chapter. We'll review your message and be in touch.",
+        sponsorship: "Thanks for your interest in partnering with us. We'll review your message and be in touch.",
+        speaking: "Thanks for your proposal. We'll review your message and be in touch.",
+        volunteer: "Thanks for offering to help. We'll review your message and be in touch.",
+        events: "Thanks for your question. We'll review your message and be in touch.",
+        general: "Thanks for reaching out. We'll review your message and be in touch.",
+      };
+
+      function applyTopicState() {
+        const topic = topicSelect.value;
+        messageArea.placeholder = MESSAGE_PLACEHOLDERS[topic] || DEFAULT_MESSAGE_PLACEHOLDER;
+        linkedinHint.classList.toggle('hidden', topic !== 'membership');
       }
 
-      inquirySelect.addEventListener('change', function () {
-        applyMembershipState();
-        if (messageArea.getAttribute('aria-invalid') === 'true') validateField('message');
+      topicSelect.addEventListener('change', function () {
+        applyTopicState();
+        if (topicSelect.getAttribute('aria-invalid') === 'true') validateField('topic');
       });
 
       (function () {
         const params = new URLSearchParams(window.location.search);
-        if (params.get('type') === 'membership') {
-          inquirySelect.value = 'New membership';
-          messageArea.value = MEMBERSHIP_PREFILL;
-          linkedinHint.classList.remove('hidden');
+        const requested = params.get('topic') || params.get('type');
+        if (requested && Object.prototype.hasOwnProperty.call(MESSAGE_PLACEHOLDERS, requested)) {
+          topicSelect.value = requested;
         }
+        applyTopicState();
       })();
 
       const validators = {
+        topic: v => v ? '' : 'Please choose a topic.',
         name: v => v.trim() ? '' : 'Please enter your name.',
         email: v => {
           const t = v.trim();
@@ -157,7 +178,6 @@
           if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(t)) return 'Please enter a valid email address.';
           return '';
         },
-        inquiry_type: v => v ? '' : 'Please choose an inquiry type.',
         message: v => v.trim() ? '' : 'Please enter a message.',
       };
 
@@ -223,33 +243,33 @@
         });
         if (firstInvalid) { firstInvalid.focus(); return; }
 
+        const topic = topicSelect.value;
         btn.disabled = true;
         btn.textContent = 'Sending…';
 
         try {
-          const res = await fetch('https://api.web3forms.com/submit', {
+          const turnstileField = form.querySelector('[name="cf-turnstile-response"]');
+          const res = await fetch('/contact-submit', {
             method: 'POST',
-            headers: { 'Accept': 'application/json' },
-            body: new FormData(form),
+            headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+            body: JSON.stringify({
+              topic: topic,
+              name: form.querySelector('[name="name"]').value,
+              email: form.querySelector('[name="email"]').value,
+              organization: form.querySelector('[name="organization"]').value,
+              message: messageArea.value,
+              botcheck: form.querySelector('[name="botcheck"]').checked,
+              turnstileToken: turnstileField ? turnstileField.value : '',
+            }),
           });
-          const data = await res.json();
+          const data = await res.json().catch(() => ({}));
 
-          if (data.success) {
-            if (inquirySelect.value === 'New membership') {
-              const name = form.querySelector('[name="name"]').value;
-              const email = form.querySelector('[name="email"]').value;
-              const botcheck = form.querySelector('[name="botcheck"]').checked;
-              fetch('/membership-notify', {
-                method: 'POST',
-                headers: {
-                  'Content-Type': 'application/json',
-                  'X-Membership-Secret': '{{ site.Params.membershipNotifySecret }}',
-                },
-                body: JSON.stringify({ name, email, botcheck }),
-              }).catch(() => {});
-            }
+          if (res.ok && data.success) {
+            successMessage.textContent = SUCCESS_MESSAGES[topic] || SUCCESS_MESSAGES.general;
             form.reset();
             Object.keys(validators).forEach(field => setFieldState(field, ''));
+            applyTopicState();
+            if (window.turnstile && typeof window.turnstile.reset === 'function') window.turnstile.reset();
             fadeOut(form, () => {
               formCard.classList.add('contact-card-success');
               fadeIn(success);
@@ -259,10 +279,10 @@
               }, 120);
             });
           } else {
-            throw new Error(data.message || 'Submission failed.');
+            throw new Error('Submission failed.');
           }
         } catch (err) {
-          error.textContent = err.message || 'Something went wrong. Please email us directly at {{ site.Params.email }}.';
+          error.innerHTML = 'Something went wrong. Please email us directly at <a href="mailto:{{ site.Params.email }}" class="font-semibold underline">{{ site.Params.email }}</a>.';
           error.classList.remove('hidden');
           btn.disabled = false;
           btn.textContent = 'Send Inquiry';
