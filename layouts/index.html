@@ -20,7 +20,7 @@
           {{ range . }}
             <div class="mt-10 flex max-w-3xl flex-col gap-4 border-l-4 border-orange bg-charcoal/72 p-5 shadow-[0_20px_70px_rgba(0,0,0,0.32)] ring-1 ring-white/10 backdrop-blur-sm sm:flex-row sm:items-center sm:justify-between">
               <div>
-                <p class="inline-flex rounded-full bg-orange px-3 py-1 text-xs font-bold uppercase tracking-[0.18em] text-white shadow-[0_8px_20px_rgba(0,0,0,0.28)]">Next Meetup</p>
+                <p class="hero-tag"><span class="hero-tag-rule" aria-hidden="true"></span>Next Meetup</p>
                 <a href="{{ .RelPermalink }}" class="mt-2 block text-base font-bold text-white transition hover:text-orange sm:text-xl">{{ .Title }}</a>
                 <p class="mt-2 text-xs font-semibold text-white/85 sm:text-sm">{{ .Date.Format "Jan 2, 2006" }}{{ with .Params.location }} · {{ . }}{{ end }}</p>
               </div>

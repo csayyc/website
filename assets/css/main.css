@@ -35,6 +35,16 @@
     @apply text-sm font-bold uppercase tracking-[0.22em] text-orange;
   }
 
+  /* Caption sitting on a hero image. Deliberately has no fill, radius or
+     shadow so it never reads as a button next to a real CTA. */
+  .hero-tag {
+    @apply inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.18em] text-white drop-shadow-[0_2px_8px_rgba(0,0,0,0.75)];
+  }
+
+  .hero-tag-rule {
+    @apply h-3.5 w-0.5 shrink-0 bg-orange;
+  }
+
   .btn-primary {
     @apply inline-flex items-center justify-center rounded-full bg-orange px-6 py-3 text-sm font-bold text-white shadow-premium transition hover:-translate-y-0.5 hover:bg-[#d9642d] focus:outline-none focus:ring-4 focus:ring-orange/25;
   }
