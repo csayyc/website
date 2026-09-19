@@ -5,6 +5,18 @@ enableRobotsTXT = true
 buildFuture = true
 summaryLength = 24
 
+[sitemap]
+  changefreq = 'weekly'
+  priority = 0.5
+
+[outputFormats]
+  [outputFormats.LLMS]
+    mediaType = 'text/plain'
+    baseName = 'llms'
+
+[outputs]
+  home = ['HTML', 'RSS', 'LLMS']
+
 [params]
   description = 'Cloud Security Alliance Calgary Chapter connects cloud security professionals across Calgary and Alberta.'
   email = 'hello@csacalgary.org'

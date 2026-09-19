@@ -1,10 +1,10 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>{{ if .IsHome }}{{ site.Title }}{{ else }}{{ .Title }} | {{ site.Title }}{{ end }}</title>
+  <title>{{ if .IsHome }}{{ site.Title }} | Cloud Security in Calgary, Alberta{{ else }}{{ .Title }} | {{ site.Title }}{{ end }}</title>
   <link rel="canonical" href="{{ .Permalink }}">
   <meta name="description" content="{{ with .Description }}{{ . }}{{ else }}{{ site.Params.description }}{{ end }}">
-  <meta property="og:title" content="{{ if .IsHome }}{{ site.Title }}{{ else }}{{ .Title }} | {{ site.Title }}{{ end }}">
+  <meta property="og:title" content="{{ if .IsHome }}{{ site.Title }} | Cloud Security in Calgary, Alberta{{ else }}{{ .Title }} | {{ site.Title }}{{ end }}">
   <meta property="og:description" content="{{ with .Description }}{{ . }}{{ else }}{{ site.Params.description }}{{ end }}">
   <meta property="og:url" content="{{ .Permalink }}">
   {{ $ogType := "website" }}
@@ -48,4 +48,5 @@
   {{ with site.Params.cloudflareAnalyticsToken }}
     <script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token":"{{ . }}"}'></script>
   {{ end }}
+  {{ partial "jsonld.html" . }}
 </head>

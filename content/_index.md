@@ -2,6 +2,8 @@
 title: "CSA Calgary Chapter"
 tagline: "Advancing cloud security leadership in Calgary."
 description: "Advancing cloud security knowledge and trusted cloud adoption in Calgary and surrounding communities."
+sitemap:
+  priority: 1.0
 ---
 
 CSA Calgary’s mission is to advance cloud security knowledge and trusted cloud adoption in Calgary and surrounding communities by delivering education, community engagement, and research-aligned activities.

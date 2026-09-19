@@ -1,0 +1,23 @@
+# {{ site.Title }}
+
+> {{ site.Params.description }}
+
+Calgary's chapter of the Cloud Security Alliance. Free community events, meetups,
+workshops, and resources for cloud security professionals across Calgary and Alberta.
+
+## Pages
+
+- [Home]({{ site.BaseURL }})
+{{ range site.Sections }}{{ if not .Draft }}- [{{ .Title | safeHTML }}]({{ .Permalink }}){{ with .Params.description }}: {{ . | safeHTML }}{{ end }}
+{{ end }}{{ end }}
+## Events
+
+{{ range where site.RegularPages "Section" "events" }}{{ if not .Draft }}- [{{ .Title | safeHTML }}]({{ .Permalink }}) ({{ .Date.Format "2006-01-02" }}){{ with .Params.description }}: {{ . | safeHTML }}{{ end }}
+{{ end }}{{ end }}
+## Contact
+
+- Email: hello@csacalgary.org
+- Contact form: {{ site.BaseURL }}contact/
+- LinkedIn: {{ site.Params.linkedin }}
+- LinkedIn (company page): https://www.linkedin.com/company/csa-calgary/
+- Meetup: https://www.meetup.com/csa-calgary/
