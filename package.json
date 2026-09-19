@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "hugo server -D --disableFastRender",
-    "build": "hugo --minify",
+    "build": "if [ -n \"$CF_PAGES_URL\" ] && [ \"${CF_PAGES_BRANCH:-main}\" != \"main\" ]; then hugo --minify --baseURL \"$CF_PAGES_URL\"; else hugo --minify; fi",
     "tailwind": "tailwindcss -i ./assets/css/main.css -o ./static/css/main.css --watch",
     "functions:dev": "npm run build && wrangler pages dev public --compatibility-date=2024-11-01 --port=8788"
   },
