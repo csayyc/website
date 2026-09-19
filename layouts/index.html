@@ -83,10 +83,10 @@
             <span class="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-navy text-white">{{ partial "icon.html" (dict "name" "users" "class" "h-6 w-6") }}</span>
           </div>
           <div class="grid gap-3 sm:grid-cols-3">
-            {{ range slice (dict "number" "01" "title" "Learn") (dict "number" "02" "title" "Connect") (dict "number" "03" "title" "Collaborate") }}
+            {{ range slice (dict "title" "Vendor-neutral" "copy" "No vendor sets the agenda.") (dict "title" "Research-aligned" "copy" "Grounded in CSA global research.") (dict "title" "Practitioner-led" "copy" "Run by people doing the work.") }}
               <div class="border-l-2 border-orange bg-white/85 py-3 pl-4 backdrop-blur-sm">
-                <p class="text-xs font-extrabold tracking-[0.18em] text-orange">{{ .number }}</p>
-                <p class="mt-1 text-sm font-bold leading-5 text-navy">{{ .title }}</p>
+                <p class="text-sm font-bold leading-5 text-navy">{{ .title }}</p>
+                <p class="mt-1 text-xs leading-5 text-csa-slate">{{ .copy }}</p>
               </div>
             {{ end }}
           </div>
