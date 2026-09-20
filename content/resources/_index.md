@@ -1,5 +1,5 @@
 ---
 title: "Resources"
-description: "Cloud security reading materials, CSA global links, and future presentation archives."
+description: "Cloud security resources, reading materials, and Cloud Security Alliance links for Calgary practitioners."
 layout: "resources"
 ---

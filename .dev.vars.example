@@ -1,2 +1,6 @@
 RESEND_API_KEY=your_resend_api_key_here
-MEMBERSHIP_NOTIFY_SECRET=your_membership_notify_secret_here
+TURNSTILE_SECRET_KEY=your_turnstile_secret_key_here
+CONTACT_MEMBERSHIP_TO=membership@csacalgary.org
+CONTACT_SPONSORSHIP_TO=sponsorship@csacalgary.org
+CONTACT_PROGRAMS_TO=programs@csacalgary.org
+CONTACT_GENERAL_TO=hello@csacalgary.org

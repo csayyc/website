@@ -20,7 +20,7 @@
           {{ range . }}
             <div class="mt-10 flex max-w-3xl flex-col gap-4 border-l-4 border-orange bg-charcoal/72 p-5 shadow-[0_20px_70px_rgba(0,0,0,0.32)] ring-1 ring-white/10 backdrop-blur-sm sm:flex-row sm:items-center sm:justify-between">
               <div>
-                <p class="inline-flex rounded-full bg-orange px-3 py-1 text-xs font-bold uppercase tracking-[0.18em] text-white shadow-[0_8px_20px_rgba(0,0,0,0.28)]">Next Meetup</p>
+                <p class="hero-tag"><span class="hero-tag-rule" aria-hidden="true"></span>Next Meetup</p>
                 <a href="{{ .RelPermalink }}" class="mt-2 block text-base font-bold text-white transition hover:text-orange sm:text-xl">{{ .Title }}</a>
                 <p class="mt-2 text-xs font-semibold text-white/85 sm:text-sm">{{ .Date.Format "Jan 2, 2006" }}{{ with .Params.location }} · {{ . }}{{ end }}</p>
               </div>
@@ -68,7 +68,7 @@
         <p class="eyebrow">New membership</p>
         <h2 class="mt-4 max-w-xl text-2xl font-extrabold tracking-tight text-navy sm:text-4xl">Cloud security is complex. Community makes it easier.</h2>
         <p class="mt-6 max-w-lg text-base leading-7 text-csa-slate sm:text-lg sm:leading-8">CSA Calgary brings together the people who protect, build, govern, and learn in the cloud, so good questions do not have to be solved alone. Everyone with an interest in cloud security is welcome.</p>
-        <a href="{{ "/contact/?type=membership#contact-form" | relURL }}" class="group mt-8 inline-flex items-center gap-3 text-sm font-extrabold text-navy transition hover:text-orange">
+        <a href="{{ "/contact/?topic=membership#contact-form" | relURL }}" class="group mt-8 inline-flex items-center gap-3 text-sm font-extrabold text-navy transition hover:text-orange">
           Become a Member
           <span class="flex h-10 w-10 items-center justify-center rounded-full bg-orange text-white transition group-hover:translate-x-1">{{ partial "icon.html" (dict "name" "arrow" "class" "h-5 w-5") }}</span>
         </a>
@@ -83,10 +83,10 @@
             <span class="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-navy text-white">{{ partial "icon.html" (dict "name" "users" "class" "h-6 w-6") }}</span>
           </div>
           <div class="grid gap-3 sm:grid-cols-3">
-            {{ range slice (dict "number" "01" "title" "Learn") (dict "number" "02" "title" "Connect") (dict "number" "03" "title" "Collaborate") }}
+            {{ range slice (dict "title" "Vendor-neutral" "copy" "No vendor sets the agenda.") (dict "title" "Research-aligned" "copy" "Grounded in CSA global research.") (dict "title" "Practitioner-led" "copy" "Run by people doing the work.") }}
               <div class="border-l-2 border-orange bg-white/85 py-3 pl-4 backdrop-blur-sm">
-                <p class="text-xs font-extrabold tracking-[0.18em] text-orange">{{ .number }}</p>
-                <p class="mt-1 text-sm font-bold leading-5 text-navy">{{ .title }}</p>
+                <p class="text-sm font-bold leading-5 text-navy">{{ .title }}</p>
+                <p class="mt-1 text-xs leading-5 text-csa-slate">{{ .copy }}</p>
               </div>
             {{ end }}
           </div>

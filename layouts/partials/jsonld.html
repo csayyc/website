@@ -1,0 +1,72 @@
+{{/* Structured data (schema.org JSON-LD). Included in <head> on every page. */}}
+{{ $orgId := printf "%s#organization" site.BaseURL }}
+{{ $org := dict
+  "@type" (slice "Organization" "NGO")
+  "@id" $orgId
+  "name" site.Title
+  "alternateName" "Cloud Security Alliance Calgary Chapter"
+  "url" site.BaseURL
+  "logo" ("images/footer-logo.jpg" | absURL)
+  "description" site.Params.description
+  "email" site.Params.email
+  "address" (dict "@type" "PostalAddress" "addressLocality" "Calgary" "addressRegion" "AB" "addressCountry" "CA")
+  "areaServed" (slice (dict "@type" "City" "name" "Calgary") (dict "@type" "AdministrativeArea" "name" "Alberta"))
+  "parentOrganization" (dict "@type" "Organization" "name" "Cloud Security Alliance" "url" "https://cloudsecurityalliance.org")
+  "sameAs" (slice site.Params.linkedin "https://www.linkedin.com/company/csa-calgary/" "https://www.meetup.com/csa-calgary/")
+}}
+{{ $nodes := slice $org }}
+
+{{ if .IsHome }}
+  {{ $nodes = $nodes | append (dict
+    "@type" "WebSite"
+    "@id" (printf "%s#website" site.BaseURL)
+    "url" site.BaseURL
+    "name" site.Title
+    "description" site.Params.description
+    "inLanguage" "en-CA"
+    "publisher" (dict "@id" $orgId)
+  ) }}
+{{ end }}
+
+{{ if and (not .IsHome) .IsNode }}
+  {{/* Section list pages: Home > Section */}}
+  {{ $crumbs := slice
+    (dict "@type" "ListItem" "position" 1 "name" "Home" "item" site.BaseURL)
+    (dict "@type" "ListItem" "position" 2 "name" .Title "item" .Permalink)
+  }}
+  {{ $nodes = $nodes | append (dict "@type" "BreadcrumbList" "itemListElement" $crumbs) }}
+{{ else if and (not .IsHome) .IsPage }}
+  {{/* Regular pages: Home > Section > Page (or Home > Page when top-level) */}}
+  {{ $crumbs := slice (dict "@type" "ListItem" "position" 1 "name" "Home" "item" site.BaseURL) }}
+  {{ if and .Parent (not .Parent.IsHome) }}
+    {{ $crumbs = $crumbs | append (dict "@type" "ListItem" "position" 2 "name" .Parent.Title "item" .Parent.Permalink) }}
+    {{ $crumbs = $crumbs | append (dict "@type" "ListItem" "position" 3 "name" .Title "item" .Permalink) }}
+  {{ else }}
+    {{ $crumbs = $crumbs | append (dict "@type" "ListItem" "position" 2 "name" .Title "item" .Permalink) }}
+  {{ end }}
+  {{ $nodes = $nodes | append (dict "@type" "BreadcrumbList" "itemListElement" $crumbs) }}
+{{ end }}
+
+{{ if and (eq .Section "events") .IsPage }}
+  {{ $venue := .Params.venue | default .Params.location | default "Calgary, AB" }}
+  {{ $address := dict "@type" "PostalAddress" "addressLocality" "Calgary" "addressRegion" "AB" "addressCountry" "CA" }}
+  {{ with .Params.venue_address }}{{ $address = merge $address (dict "streetAddress" .) }}{{ end }}
+  {{ $image := "images/landing-b-branded.png" | absURL }}
+  {{ with .Params.image }}{{ $image = . | absURL }}{{ end }}
+  {{ $event := dict
+    "@type" "Event"
+    "name" .Title
+    "description" (.Params.description | default .Title)
+    "startDate" (.Date.Format "2006-01-02T15:04:05Z07:00")
+    "url" .Permalink
+    "image" (slice $image)
+    "eventStatus" "https://schema.org/EventScheduled"
+    "eventAttendanceMode" "https://schema.org/OfflineEventAttendanceMode"
+    "location" (dict "@type" "Place" "name" $venue "address" $address)
+    "organizer" (dict "@id" $orgId)
+  }}
+  {{ with .Params.meetup_url }}{{ $event = merge $event (dict "sameAs" (slice .)) }}{{ end }}
+  {{ $nodes = $nodes | append $event }}
+{{ end }}
+
+<script type="application/ld+json">{{ dict "@context" "https://schema.org" "@graph" $nodes | jsonify | safeJS }}</script>
