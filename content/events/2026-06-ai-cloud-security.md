@@ -5,8 +5,8 @@ draft: false
 description: A practitioner evening on how AI is reshaping the cloud threat
   landscape - attacks, defences, and governance.
 location: Calgary, AB
-meetup_url: https://www.meetup.com/csa-calgary/
-linkedin_url: https://www.linkedin.com/company/csa-calgary/
+meetup_url: ""
+linkedin_url: https://www.linkedin.com/groups/18361060/
 time: 6:00 – 9:00 PM MDT
 venue: ""
 venue_address: 700 9 Ave SW, Calgary, AB

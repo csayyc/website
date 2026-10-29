@@ -1,0 +1,8 @@
+{{/* Returns true while the Cybersecurity Awareness Month campaign window is open at build time. */}}
+{{ $active := false }}
+{{ with site.Params.awareness }}
+  {{ if and (ge now (time.AsTime .start)) (lt now (time.AsTime .end)) }}
+    {{ $active = true }}
+  {{ end }}
+{{ end }}
+{{ return $active }}

@@ -27,7 +27,7 @@
         <div class="event-hero-meta mt-3">
           <div class="event-hero-meta-item">
             {{ partial "icon.html" (dict "name" "calendar" "class" "h-3.5 w-3.5 shrink-0 opacity-60") }}
-            {{ .Date.Format "Monday, January 2, 2006" }}{{ with .Params.time }} · {{ . }}{{ end }}
+            {{ .Params.date_label | default (.Date.Format "Monday, January 2, 2006") }}{{ with .Params.time }} · {{ . }}{{ end }}
           </div>
           {{ with $venue }}
             <div class="event-hero-meta-item">
@@ -119,7 +119,7 @@
 
         <div class="sidebar-field">
           <p class="sidebar-label">Date & Time</p>
-          <p class="sidebar-value">{{ .Date.Format "Monday, January 2, 2006" }}</p>
+          <p class="sidebar-value">{{ .Params.date_label | default (.Date.Format "Monday, January 2, 2006") }}</p>
           {{ with .Params.time }}<p class="sidebar-sub">{{ . }}</p>{{ end }}
         </div>
 

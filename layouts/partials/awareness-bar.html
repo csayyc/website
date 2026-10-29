@@ -1,0 +1,11 @@
+{{ if partial "awareness-active.html" . }}
+  <div data-awareness-end="{{ site.Params.awareness.end }}" class="bg-orange text-white">
+    <div class="container-premium flex flex-wrap items-center justify-center gap-x-3 gap-y-1 py-2.5 text-center text-xs font-semibold sm:text-sm">
+      <span class="inline-flex items-center gap-2">
+        {{ partial "icon.html" (dict "name" "shield" "class" "h-4 w-4 shrink-0") }}
+        October is Cybersecurity Awareness Month.
+      </span>
+      <a href="{{ "/resources/#awareness-month" | relURL }}" class="inline-flex items-center gap-1 font-bold underline decoration-white/50 underline-offset-4 transition hover:decoration-white">Explore the resources {{ partial "icon.html" (dict "name" "arrow" "class" "h-3.5 w-3.5") }}</a>
+    </div>
+  </div>
+{{ end }}

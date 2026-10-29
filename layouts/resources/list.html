@@ -15,7 +15,9 @@
     <div class="container-premium grid gap-10 lg:grid-cols-[1fr_0.75fr] lg:items-start">
       <div>
         {{ $resources := hugo.Data.resources }}
+        {{ $awarenessActive := partial "awareness-active.html" . }}
         {{ $categories := slice "Start Here" "Controls & Assurance" "Platform Security References" "Threats & Risk" "AI Governance" "AI Security" }}
+        {{ if $awarenessActive }}{{ $categories = slice "Cybersecurity Awareness Month" | append $categories }}{{ end }}
         <div class="overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-premium">
           <div class="border-b border-slate-200 bg-surface px-6 py-5">
             <p class="eyebrow">Curated Collections</p>
@@ -27,11 +29,13 @@
             {{ $cat := . }}
             {{ $items := where $resources "category" $cat }}
             {{ if $items }}
-              <details class="group">
+              {{ $isAwareness := eq $cat "Cybersecurity Awareness Month" }}
+              <details class="group"{{ if $isAwareness }} id="awareness-month" open{{ end }}>
                 <summary class="flex cursor-pointer list-none items-center justify-between px-6 py-5 select-none">
                   <div class="flex items-center gap-3">
                     <span class="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-orange/10 text-xs font-bold text-orange">{{ len $items }}</span>
                     <span class="font-semibold text-navy">{{ $cat }}</span>
+                    {{ if $isAwareness }}<span class="rounded-full bg-orange px-2 py-0.5 text-[0.65rem] font-bold uppercase tracking-wider text-white">October</span>{{ end }}
                   </div>
                   <span class="ml-4 shrink-0 text-csa-slate transition-transform group-open:rotate-180">
                     <svg class="h-4 w-4" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
