@@ -6,7 +6,13 @@
       </div>
       <p class="max-w-md text-sm leading-6 text-white/70 md:text-base md:leading-7">Calgary's chapter of the world's leading cloud security organization, delivering education, community, and research-aligned programming for practitioners across Alberta.</p>
       <a href="{{ "/contact/?topic=membership#contact-form" | relURL }}" class="btn-primary mt-6">Become a Member</a>
-      <p class="mt-6 text-xs text-white/65 md:text-sm">© {{ now.Year }} CSA Calgary Chapter. All rights reserved.</p>
+      <div class="mt-6 grid gap-1 text-xs leading-5 text-white/65 md:text-sm md:leading-6">
+        <p class="font-bold text-white">{{ site.Params.legalName }}</p>
+        <p>{{ site.Params.legalForm }} · Corporate Access No. {{ site.Params.corporateAccessNumber }}</p>
+        <p>{{ site.Params.addressStreet }}, {{ site.Params.addressLocality }}</p>
+        <p>csacalgary.org is the official website and primary domain of {{ site.Params.legalName }}.</p>
+      </div>
+      <p class="mt-4 text-xs text-white/65 md:text-sm">© {{ now.Year }} {{ site.Params.legalName }}. All rights reserved.</p>
     </div>
     <div>
       <h2 class="mb-4 text-sm font-bold uppercase tracking-widest text-white/65">Explore</h2>
@@ -35,9 +41,6 @@
         <div class="flex flex-wrap gap-3 pt-2">
           <a href="{{ site.Params.linkedin }}" class="inline-flex items-center gap-2 rounded-full border border-white/15 px-4 py-2 font-bold transition hover:-translate-y-0.5 hover:border-orange hover:bg-orange hover:text-white" target="_blank" rel="noopener noreferrer">
             {{ partial "icon.html" (dict "name" "linkedin" "class" "h-4 w-4") }} LinkedIn
-          </a>
-          <a href="{{ site.Params.meetup }}" class="inline-flex items-center gap-2 rounded-full border border-white/15 px-4 py-2 font-bold transition hover:-translate-y-0.5 hover:border-orange hover:bg-orange hover:text-white" target="_blank" rel="noopener noreferrer">
-            {{ partial "icon.html" (dict "name" "meetup" "class" "h-4 w-4") }} Meetup
           </a>
         </div>
       </div>

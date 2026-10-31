@@ -3,10 +3,19 @@
   {{ partial "head.html" . }}
   <body class="min-h-screen">
     <a href="#main" class="skip-link">Skip to main content</a>
+    {{ partial "awareness-bar.html" . }}
     {{ partial "header.html" . }}
     <main id="main">
       {{ block "main" . }}{{ end }}
     </main>
     {{ partial "footer.html" . }}
+    {{ if partial "awareness-active.html" . }}
+      <script>
+        // Static builds can outlive the campaign; hide awareness-month content once it ends.
+        document.querySelectorAll('[data-awareness-end]').forEach(function (el) {
+          if (Date.now() >= Date.parse(el.dataset.awarenessEnd)) el.remove();
+        });
+      </script>
+    {{ end }}
   </body>
 </html>

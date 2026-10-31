@@ -21,9 +21,18 @@ summaryLength = 24
   description = 'Cloud Security Alliance Calgary Chapter connects cloud security professionals across Calgary and Alberta.'
   email = 'hello@csacalgary.org'
   linkedin = 'https://www.linkedin.com/groups/18361060/'
-  meetup = 'https://www.meetup.com/'
+  legalName = 'Cloud Security Alliance Calgary Region Association'
+  legalForm = 'Incorporated under the Societies Act (Alberta)'
+  corporateAccessNumber = '5028393212'
+  addressStreet = 'Suite 2500, 500 4th Ave SW'
+  addressLocality = 'Calgary, AB T2P 2V6'
   turnstileSiteKey = ''
   cloudflareAnalyticsToken = ''
+
+  # Cybersecurity Awareness Month campaign window (banner, home section, resources highlight).
+  [params.awareness]
+    start = '2026-10-01T00:00:00-06:00'
+    end = '2026-11-01T00:00:00-06:00'
 
 [menus]
   [[menus.main]]

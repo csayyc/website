@@ -44,6 +44,16 @@
         </div>
       </div>
 
+      <div class="mt-10 rounded-2xl border border-slate-200 bg-surface p-5">
+        <p class="text-sm font-bold uppercase tracking-[0.18em] text-orange">Legal entity</p>
+        <div class="mt-3 grid gap-2 text-base leading-7 text-csa-slate">
+          <p>CSA Calgary is operated by <strong class="text-navy">{{ site.Params.legalName }}</strong>, a nonprofit society {{ site.Params.legalForm | replaceRE "^Incorporated" "incorporated" }}.</p>
+          <p><span class="font-semibold text-navy">Corporate Access Number:</span> {{ site.Params.corporateAccessNumber }}</p>
+          <p><span class="font-semibold text-navy">Registered office:</span> {{ site.Params.addressStreet }}, {{ site.Params.addressLocality }}</p>
+          <p>csacalgary.org is the society’s official website and primary domain.</p>
+        </div>
+      </div>
+
       {{ range $section := $sections }}
         {{ $sectionHTML := printf "<h2%s" $section }}
         {{ if in $sectionHTML "Connected to the Global CSA Community" }}

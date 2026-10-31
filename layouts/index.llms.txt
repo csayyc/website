@@ -19,5 +19,3 @@ workshops, and resources for cloud security professionals across Calgary and Alb
 - Email: hello@csacalgary.org
 - Contact form: {{ site.BaseURL }}contact/
 - LinkedIn: {{ site.Params.linkedin }}
-- LinkedIn (company page): https://www.linkedin.com/company/csa-calgary/
-- Meetup: https://www.meetup.com/csa-calgary/
