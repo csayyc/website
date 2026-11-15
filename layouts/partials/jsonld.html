@@ -55,6 +55,14 @@
   {{ with .Params.venue_address }}{{ $address = merge $address (dict "streetAddress" .) }}{{ end }}
   {{ $image := "images/landing-b-branded.png" | absURL }}
   {{ with .Params.image }}{{ $image = . | absURL }}{{ end }}
+  {{ $attendance := "https://schema.org/OfflineEventAttendanceMode" }}
+  {{ $location := dict "@type" "Place" "name" $venue "address" $address }}
+  {{ if .Params.online }}
+    {{ $attendance = "https://schema.org/OnlineEventAttendanceMode" }}
+    {{ $location = dict "@type" "VirtualLocation" "url" (.Params.rsvp_url | default .Permalink) }}
+  {{ end }}
+  {{ $organizer := dict "@id" $orgId }}
+  {{ with .Params.organizer_name }}{{ $organizer = dict "@type" "Organization" "name" . "url" $.Params.organizer_url }}{{ end }}
   {{ $event := dict
     "@type" "Event"
     "name" .Title
@@ -63,11 +71,12 @@
     "url" .Permalink
     "image" (slice $image)
     "eventStatus" "https://schema.org/EventScheduled"
-    "eventAttendanceMode" "https://schema.org/OfflineEventAttendanceMode"
-    "location" (dict "@type" "Place" "name" $venue "address" $address)
-    "organizer" (dict "@id" $orgId)
+    "eventAttendanceMode" $attendance
+    "location" $location
+    "organizer" $organizer
   }}
   {{ with .Params.meetup_url }}{{ $event = merge $event (dict "sameAs" (slice .)) }}{{ end }}
+  {{ with .Params.end_date }}{{ $event = merge $event (dict "endDate" ((time.AsTime .).Format "2006-01-02T15:04:05Z07:00")) }}{{ end }}
   {{ $nodes = $nodes | append $event }}
 {{ end }}
 

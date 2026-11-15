@@ -3,6 +3,7 @@
   {{ $rsvpURL := .Params.meetup_url | default .Params.rsvp_url }}
   {{ $venue := .Params.venue | default .Params.location }}
   {{ $venueAddr := .Params.venue_address }}
+  {{ $rsvpLabel := .Params.rsvp_label | default "RSVP" }}
 
   {{/* ── Hero ── */}}
   <section class="event-hero">
@@ -47,7 +48,7 @@
       {{/* Action buttons */}}
       <div class="event-hero-actions relative z-10">
         {{ if $rsvpURL }}
-          <a href="{{ $rsvpURL }}" class="btn-rsvp" target="_blank" rel="noopener noreferrer">RSVP</a>
+          <a href="{{ $rsvpURL }}" class="btn-rsvp" target="_blank" rel="noopener noreferrer">{{ $rsvpLabel }}</a>
         {{ else }}
           <span class="btn-coming-soon">RSVP coming soon</span>
         {{ end }}
@@ -144,7 +145,7 @@
 
         <div class="sidebar-actions">
           {{ if $rsvpURL }}
-            <a href="{{ $rsvpURL }}" class="sidebar-btn-rsvp" target="_blank" rel="noopener noreferrer">RSVP</a>
+            <a href="{{ $rsvpURL }}" class="sidebar-btn-rsvp" target="_blank" rel="noopener noreferrer">{{ $rsvpLabel }}</a>
           {{ else }}
             <span class="sidebar-btn-rsvp sidebar-btn-rsvp--disabled">RSVP coming soon</span>
           {{ end }}
