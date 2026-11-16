@@ -19,10 +19,14 @@ collections:
     fields:
       - { label: "Title", name: "title", widget: "string" }
       - { label: "Date", name: "date", widget: "datetime" }
+      - { label: "End Date", name: "end_date", widget: "datetime", required: false }
+      - { label: "Date Label Override", name: "date_label", widget: "string", required: false, hint: "Optional custom date text, e.g. Wed–Thu, November 18–19, 2026" }
       - { label: "Draft", name: "draft", widget: "boolean", default: true }
       - { label: "Short Description", name: "description", widget: "text" }
       - { label: "Location", name: "location", widget: "string" }
       - { label: "Meetup RSVP Link", name: "meetup_url", widget: "string", required: false }
+      - { label: "External RSVP Link", name: "rsvp_url", widget: "string", required: false }
+      - { label: "RSVP Button Label", name: "rsvp_label", widget: "string", required: false, hint: "Defaults to RSVP (e.g. Register free)" }
       - { label: "LinkedIn Event Link", name: "linkedin_url", widget: "string", required: false }
       - { label: "Hero Image", name: "image", widget: "image", required: false }
       - { label: "Display Time", name: "time", widget: "string", required: false, hint: "Example: 6:00 - 9:00 PM MDT" }
@@ -30,6 +34,9 @@ collections:
       - { label: "Venue Address", name: "venue_address", widget: "string", required: false }
       - { label: "Capacity", name: "capacity", widget: "number", value_type: "int", required: false }
       - { label: "Event Type", name: "event_type", widget: "select", required: false, options: ["Meetup", "Workshop", "Panel", "Summit", "Training", "Networking"] }
+      - { label: "Online / Virtual Event", name: "online", widget: "boolean", required: false, default: false }
+      - { label: "Organizer Name", name: "organizer_name", widget: "string", required: false, hint: "Leave blank when hosted by CSA Calgary Chapter" }
+      - { label: "Organizer URL", name: "organizer_url", widget: "string", required: false }
       - label: "Agenda"
         name: "agenda"
         widget: "list"
